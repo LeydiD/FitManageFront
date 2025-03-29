@@ -28,8 +28,18 @@ const Registro = () => {
       const response = await registrarCliente(formData);
       console.log("Cliente registrado con éxito:", response);
       alert("Registro exitoso");
+      setFormData({
+        DNI: "",
+        nombre: "",
+        telefono: "",
+        email: "",
+        edad: "",
+        peso: "",
+        altura: "",
+        contraseña: ""
+      });
     } catch (error) {
-      alert("Error al registrar cliente");
+      alert(error.message);
     }
   };
 
