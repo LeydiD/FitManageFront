@@ -4,7 +4,7 @@ import Header from "./components/Header"
 import MenuAdmin from "./components/administrador/MenuAdmin";
 import Inicio from "./components/administrador/pages/Inicio";
 import Registro from "./components/administrador/pages/Registro";
-// import Clientes from "./pages/Clientes";
+// import Clientes from "./components/administrador/pages/Clientes";
 // import Membresias from "./pages/Membresias";
 // import RegistrarPago from "./pages/RegistrarPago";
 // import Ganancias from "./pages/Ganancias";
