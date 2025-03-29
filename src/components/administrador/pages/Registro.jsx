@@ -56,44 +56,44 @@ const Registro = () => {
           <div className="row">
             <div className="col-md-6">
               <label>Nombre Completo</label>
-              <input type="text" name="nombre" className="form-control" placeholder="Carlos Ramírez López" onChange={handleChange} />
+              <input type="text" name="nombre" className="form-control" value={formData.nombre} onChange={handleChange} />
             </div>
             <div className="col-md-6">
               <label>Edad</label>
-              <input type="text" name="edad" className="form-control" placeholder="20" onChange={handleChange} />
+              <input type="text" name="edad" className="form-control" value={formData.edad} onChange={handleChange} />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Número de contacto</label>
-              <input type="text" name="telefono" className="form-control" placeholder="3225489612" onChange={handleChange} />
+              <input type="text" name="telefono" className="form-control" value={formData.telefono} onChange={handleChange} />
             </div>
             <div className="col-md-6">
               <label>Peso</label>
-              <input type="text" name="peso" className="form-control" placeholder="54 kg" onChange={handleChange} />
+              <input type="text" name="peso" className="form-control" placeholder="En kilogramos" value={formData.peso} onChange={handleChange} />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Correo electrónico</label>
-              <input type="email" name="email" className="form-control" placeholder="carlos.ramirez@example.com" onChange={handleChange} />
+              <input type="email" name="email" className="form-control"  value={formData.email} onChange={handleChange} />
             </div>
             <div className="col-md-6">
               <label>Altura</label>
-              <input type="text" name="altura" className="form-control" placeholder="1,65 m" onChange={handleChange} />
+              <input type="text" name="altura" className="form-control" placeholder="En centimetros" value={formData.altura} onChange={handleChange} />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Número de identidad</label>
-              <input type="text" name="DNI" className="form-control" placeholder="100035641" onChange={handleChange} />
+              <input type="text" name="DNI" className="form-control" value={formData.DNI} onChange={handleChange} />
             </div>
             <div className="col-md-6">
               <label>Contraseña</label>
-              <input type="password" name="contraseña" className="form-control" placeholder="Ingrese la contraseña" onChange={handleChange} />
+              <input type="password" name="contraseña" className="form-control" value={formData.contraseña} onChange={handleChange} />
             </div>
           </div>
 
