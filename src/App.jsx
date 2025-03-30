@@ -4,7 +4,8 @@ import Header from "./components/Header"
 import MenuAdmin from "./components/administrador/MenuAdmin";
 import Inicio from "./components/administrador/pages/Inicio";
 import Registro from "./components/administrador/pages/Registro";
-// import Clientes from "./pages/Clientes";
+import Clientes from "./components/administrador/pages/Clientes";
+
 // import Membresias from "./pages/Membresias";
 // import RegistrarPago from "./pages/RegistrarPago";
 // import Ganancias from "./pages/Ganancias";
@@ -20,8 +21,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Inicio />} />
             <Route path="/registro" element={<Registro />} />
-            {/* <Route path="/clientes" element={<Clientes />} />
-            <Route path="/membresias" element={<Membresias />} />
+             <Route path="/clientes" element={<Clientes />} />
+            {/*<Route path="/membresias" element={<Membresias />} />
             <Route path="/registrar-pago" element={<RegistrarPago />} />
             <Route path="/ganancias" element={<Ganancias />} /> */}
           </Routes>
