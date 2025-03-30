@@ -20,3 +20,25 @@ export const registrarCliente = async (datos) => {
         throw error;
     }
 };
+
+export const obtenerClientes = async () => {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Error al obtener clientes");
+        return await response.json();
+    } catch (error) {
+        console.error("Error en obtenerClientes:", error);
+        throw error;
+    }
+};
+
+export const obtenerClientePorDNI = async (dni) => {
+    try {
+        const response = await fetch(`${API_URL}/${dni}`);
+        if (!response.ok) throw new Error("Cliente no encontrado");
+        return await response.json();
+    } catch (error) {
+        console.error("Error en obtenerClientePorDNI:", error);
+        throw error;
+    }
+};

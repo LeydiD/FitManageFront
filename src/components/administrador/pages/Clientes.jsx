@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Clientes.css";
+import { obtenerClientes, obtenerClientePorDNI } from "../../../api/ClienteApi";
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
-  const [allClientes, setAllClientes] = useState([]); // Almacena todos los clientes
+  const [allClientes, setAllClientes] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedCliente, setSelectedCliente] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await fetch("http://localhost:3000/clientes");
-        if (!response.ok) throw new Error("Error al obtener los clientes");
-        const data = await response.json();
+        const data = await obtenerClientes();
         setClientes(data);
-        setAllClientes(data); // Guarda la lista completa
+        setAllClientes(data);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -30,7 +31,7 @@ const Clientes = () => {
     }
 
     const filteredClientes = allClientes.filter(cliente =>
-      cliente.DNI.includes(search) // Busca por el DNI en la lista cargada
+      cliente.DNI.includes(search)
     );
 
     if (filteredClientes.length === 0) {
@@ -42,21 +43,10 @@ const Clientes = () => {
 
   const handleViewInfo = async (dni) => {
     try {
-      const response = await fetch(`http://localhost:3000/clientes/${dni}`);
-      if (!response.ok) throw new Error("Error al obtener la información del cliente");
-      const data = await response.json();
-
-      alert(`
-        Nombre: ${data.nombre}
-        DNI: ${data.DNI}
-        Teléfono: ${data.telefono}
-        Email: ${data.email}
-        Edad: ${data.edad}
-        Peso: ${data.peso} kg
-        Altura: ${data.altura} m
-      `);
+      const data = await obtenerClientePorDNI(dni);
+      setSelectedCliente(data);
+      setShowModal(true);
     } catch (error) {
-      console.error("Error:", error);
       alert("No se pudo obtener la información del cliente.");
     }
   };
@@ -85,6 +75,35 @@ const Clientes = () => {
           </div>
         ))}
       </div>
+
+      {/* MODAL DE INFORMACIÓN */}
+      {showModal && selectedCliente && (
+        <div className="modal fade show" style={{ display: "block" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Información del Cliente</h5>
+                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                <p><strong>Nombre:</strong> {selectedCliente.nombre}</p>
+                <p><strong>DNI:</strong> {selectedCliente.DNI}</p>
+                <p><strong>Teléfono:</strong> {selectedCliente.telefono}</p>
+                <p><strong>Email:</strong> {selectedCliente.email}</p>
+                <p><strong>Edad:</strong> {selectedCliente.edad}</p>
+                <p><strong>Peso:</strong> {selectedCliente.peso} kg</p>
+                <p><strong>Altura:</strong> {selectedCliente.altura} m</p>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Fondo oscuro cuando el modal está activo */}
+      {showModal && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };
