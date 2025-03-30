@@ -4,12 +4,9 @@ import Header from "./components/Header"
 import MenuAdmin from "./components/administrador/MenuAdmin";
 import Inicio from "./components/administrador/pages/Inicio";
 import Registro from "./components/administrador/pages/Registro";
-<<<<<<< HEAD
+// import Clientes from "./components/administrador/pages/Clientes";
 import Clientes from "./components/administrador/pages/Clientes";
 
-=======
-// import Clientes from "./components/administrador/pages/Clientes";
->>>>>>> cbc8cf64e664eb2cd6be1015b659d981c5d24033
 // import Membresias from "./pages/Membresias";
 // import RegistrarPago from "./pages/RegistrarPago";
 // import Ganancias from "./pages/Ganancias";
