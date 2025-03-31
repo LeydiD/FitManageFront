@@ -10,7 +10,7 @@
   padding-bottom: 40px;
 }
 
-.nombre{
+.nombre {
   font-weight: bold;
   margin-top: 8px;
   font-size: 25px;
@@ -26,10 +26,9 @@
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  object-fit: cover;  
-  border: 2px solid rgb(0, 0, 0); 
+  object-fit: cover;
+  border: 2px solid rgb(0, 0, 0);
 }
-
 
 .menu {
   display: flex;
