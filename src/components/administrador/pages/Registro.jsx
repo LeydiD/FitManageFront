@@ -36,7 +36,7 @@ const Registro = () => {
         edad: "",
         peso: "",
         altura: "",
-        contraseña: ""
+        contraseña: "",
       });
     } catch (error) {
       alert(error.message);
@@ -47,7 +47,7 @@ const Registro = () => {
     <div className="registro-container">
       <div className="registro-form">
         <div className="logo-container">
-          <img src="LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
+          <img src="/LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
         </div>
         <br />
         <h2 className="text-center fw-bold">FORMULARIO DE REGISTRO</h2>
@@ -56,49 +56,101 @@ const Registro = () => {
           <div className="row">
             <div className="col-md-6">
               <label>Nombre Completo</label>
-              <input type="text" name="nombre" className="form-control" value={formData.nombre} onChange={handleChange} />
+              <input
+                type="text"
+                name="nombre"
+                className="form-control"
+                value={formData.nombre}
+                onChange={handleChange}
+              />
             </div>
             <div className="col-md-6">
               <label>Edad</label>
-              <input type="text" name="edad" className="form-control" value={formData.edad} onChange={handleChange} />
+              <input
+                type="text"
+                name="edad"
+                className="form-control"
+                value={formData.edad}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Número de contacto</label>
-              <input type="text" name="telefono" className="form-control" value={formData.telefono} onChange={handleChange} />
+              <input
+                type="text"
+                name="telefono"
+                className="form-control"
+                value={formData.telefono}
+                onChange={handleChange}
+              />
             </div>
             <div className="col-md-6">
               <label>Peso</label>
-              <input type="text" name="peso" className="form-control" placeholder="En kilogramos" value={formData.peso} onChange={handleChange} />
+              <input
+                type="text"
+                name="peso"
+                className="form-control"
+                placeholder="En kilogramos"
+                value={formData.peso}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Correo electrónico</label>
-              <input type="email" name="email" className="form-control"  value={formData.email} onChange={handleChange} />
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
             <div className="col-md-6">
               <label>Altura</label>
-              <input type="text" name="altura" className="form-control" placeholder="En centimetros" value={formData.altura} onChange={handleChange} />
+              <input
+                type="text"
+                name="altura"
+                className="form-control"
+                placeholder="En centimetros"
+                value={formData.altura}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6">
               <label>Número de identidad</label>
-              <input type="text" name="DNI" className="form-control" value={formData.DNI} onChange={handleChange} />
+              <input
+                type="text"
+                name="DNI"
+                className="form-control"
+                value={formData.DNI}
+                onChange={handleChange}
+              />
             </div>
             <div className="col-md-6">
               <label>Contraseña</label>
-              <input type="password" name="contraseña" className="form-control" value={formData.contraseña} onChange={handleChange} />
+              <input
+                type="password"
+                name="contraseña"
+                className="form-control"
+                value={formData.contraseña}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="text-center mt-4">
-            <button type="submit" className="btn btn-danger btn-lg">REGISTRAR</button>
+            <button type="submit" className="btn btn-danger btn-lg">
+              REGISTRAR
+            </button>
           </div>
         </form>
       </div>

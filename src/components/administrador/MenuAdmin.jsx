@@ -1,25 +1,44 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import "./MenuAdmin.css";
 
-const MenuAdmin =  ({ profileImage }) => {
+const MenuAdmin = () => {
+  const navigate = useNavigate(); // Hook para redireccionar
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Elimina el token de autenticación
+    navigate("/login"); // Redirige al login
+  };
+
   return (
     <div className="admin-menu">
       <div className="admin-profile">
-        <img src={profileImage} alt="Perfil" className="profile-picture" />
-       
         <h2 className="nombre">Administrador</h2>
       </div>
       <nav className="menu">
-        <Link to="/"><Button text="Inicio" /></Link>
-        <Link to="/registro"><Button text="Registro" /></Link>
-        <Link to="/clientes"><Button text="Clientes" /></Link>
-        <Link to="/membresias"><Button text="Membresías" /></Link>
-        <Link to="/registrar-pago"><Button text="Registrar Pago" /></Link>
-        <Link to="/ganancias"><Button text="Ganancias" /></Link>
+        <Link to="/admin">
+          <Button text="Inicio" />
+        </Link>
+        <Link to="/admin/registro">
+          <Button text="Registro" />
+        </Link>
+        <Link to="/admin/clientes">
+          <Button text="Clientes" />
+        </Link>
+        <Link to="/admin/membresias">
+          <Button text="Membresías" />
+        </Link>
+        <Link to="/admin/registrar-pago">
+          <Button text="Registrar Pago" />
+        </Link>
+        <Link to="/admin/ganancias">
+          <Button text="Ganancias" />
+        </Link>
       </nav>
-      <button className="logout-button">Cerrar Sesión</button>
+      <button className="logout-button" onClick={handleLogout}>
+        Cerrar Sesión
+      </button>
     </div>
   );
 };

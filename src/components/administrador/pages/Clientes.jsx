@@ -14,17 +14,14 @@ const EstadoBadge = ({ estado }) => {
   );
 };
 
-
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [allClientes, setAllClientes] = useState([]);
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCliente, setSelectedCliente] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [estadoFiltro, setEstadoFiltro] = useState("Todos");
   const [ordenAscendente, setOrdenAscendente] = useState(true);
-
-  
 
   useEffect(() => {
     const fetchClientes = async () => {
@@ -41,43 +38,42 @@ const Clientes = () => {
   }, []);
 
   const handleSearch = () => {
-    let filtrados = allClientes;
-  
-    if (search) {
+    const query = searchQuery.toLowerCase();
+    let filtrados = allClientes.filter(cliente =>
+      cliente.nombre.toLowerCase().includes(query) ||
+      cliente.DNI.includes(query)
+    );
+
+    if (estadoFiltro !== "Todos") {
       filtrados = filtrados.filter(cliente =>
-        cliente.DNI.includes(search)
+        cliente.estado.toLowerCase() === estadoFiltro
       );
     }
-  
-    if (estadoFiltro !== "Todos") {
-      filtrados = filtrados.filter(cliente => cliente.estado.toLowerCase() === estadoFiltro);
-    }
-  
+
     if (filtrados.length === 0) {
       alert("Cliente no encontrado");
     }
-  
+
     setClientes(filtrados);
   };
-  
+
   const handleEstadoChange = (estado) => {
     setEstadoFiltro(estado);
-  
-    let filtrados = allClientes;
-  
-    if (search) {
+
+    const query = searchQuery.toLowerCase();
+    let filtrados = allClientes.filter(cliente =>
+      cliente.nombre.toLowerCase().includes(query) ||
+      cliente.DNI.includes(query)
+    );
+
+    if (estado !== "Todos") {
       filtrados = filtrados.filter(cliente =>
-        cliente.DNI.includes(search)
+        cliente.estado.toLowerCase() === estado
       );
     }
-  
-    if (estado !== "Todos") {
-      filtrados = filtrados.filter(cliente => cliente.estado.toLowerCase() === estado);
-    }
-  
+
     setClientes(filtrados);
   };
-  
 
   const handleViewInfo = async (dni) => {
     try {
@@ -93,48 +89,49 @@ const Clientes = () => {
     const clientesOrdenados = [...clientes].sort((a, b) => {
       const nombreA = a.nombre.toLowerCase();
       const nombreB = b.nombre.toLowerCase();
-  
+
       if (nombreA < nombreB) return ordenAscendente ? -1 : 1;
       if (nombreA > nombreB) return ordenAscendente ? 1 : -1;
       return 0;
     });
-  
+
     setClientes(clientesOrdenados);
-    setOrdenAscendente(!ordenAscendente); // Alternar el orden para el próximo clic
+    setOrdenAscendente(!ordenAscendente);
   };
-  
+
   return (
     <div className="clientes-container">
       <div className="search-bar d-flex align-items-center gap-2">
-  <input
-    type="text"
-    placeholder="Cédula"
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-  />
-  <button onClick={handleSearch}>Buscar</button>
+        <input
+          type="text"
+          placeholder="Buscar por nombre o cédula"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button className="btn btn-outline-primary" onClick={handleSearch}>
+  <i className="bi bi-search me-1"></i> Buscar
+</button>
 
-  <select
-    className="form-select w-auto"
-    value={estadoFiltro}
-    onChange={(e) => handleEstadoChange(e.target.value)}
-  >
-    <option value="Todos">Todos</option>
-    <option value="activo">Activo</option>
-    <option value="inactivo">Inactivo</option>
-  </select>
-</div>
 
+        <select
+          className="form-select w-auto"
+          value={estadoFiltro}
+          onChange={(e) => handleEstadoChange(e.target.value)}
+        >
+          <option value="Todos">Todos</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
 
       <div className="clientes-list">
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead className="table-light">
               <tr>
-              <th style={{ cursor: "pointer" }} onClick={ordenarPorNombre}>
-  Nombre {ordenAscendente ? "▲" : "▼"}
-</th>
-
+                <th style={{ cursor: "pointer" }} onClick={ordenarPorNombre}>
+                  Nombre {ordenAscendente ? "▲" : "▼"}
+                </th>
                 <th>Tipo Membresia</th>
                 <th>Estado</th>
                 <th>Días Restantes</th>
@@ -149,7 +146,7 @@ const Clientes = () => {
                   <td><EstadoBadge estado={cliente.estado} /></td>
                   <td>{cliente.dias_restantes}</td>
                   <td>
-                  <button className="ver-btn" onClick={() => handleViewInfo(cliente.DNI)}>Ver</button>
+                    <button className="ver-btn" onClick={() => handleViewInfo(cliente.DNI)}>Ver</button>
                   </td>
                 </tr>
               ))}
@@ -162,7 +159,7 @@ const Clientes = () => {
       {showModal && selectedCliente && (
         <div className="modal fade show" style={{ display: "block" }}>
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div  className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Información del Cliente</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
