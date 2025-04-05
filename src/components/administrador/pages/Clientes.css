@@ -62,3 +62,40 @@
     text-align: center;
   }
   
+  .ver-btn {
+    background-color: #e6f7ff;  /* azul muy claro */
+    color: #00bfff;             /* azul vivo */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background-color 0.3s;
+    width: 100%;
+    font-family: inherit; 
+  }
+  
+  .ver-btn:hover {
+    background-color: #d0f0ff;
+    color: #009acc;
+  }
+  
+  .estado-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  
+  .estado-activo {
+    background-color: #d4f4dd;  /* verde muy suave */
+    color: #1e9b50;             /* verde más fuerte */
+  }
+  
+  .estado-inactivo {
+    background-color: #fdd8d8;  /* rojo suave */
+    color: #e64848;             /* rojo fuerte */
+  }
+  
