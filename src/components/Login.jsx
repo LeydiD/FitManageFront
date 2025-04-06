@@ -6,6 +6,7 @@ import { login } from "../api/LoginApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import LoginAnimation from "./LoginAnimation";
 
 const Login = () => {
   const [DNI, setDNI] = useState("");
@@ -14,6 +15,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setUser, setRole } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
   const handleDNIChange = (e) => {
     const value = e.target.value;
@@ -32,16 +36,21 @@ const Login = () => {
       localStorage.setItem("role", data.role);
       localStorage.setItem("DNI", data.usuario.DNI);
 
-      if (data.role.toLowerCase() === "administrador") {
-        navigate("/admin");
-      } else if (data.role.toLowerCase() === "cliente") {
-        navigate("/cliente");
+      if (
+        data.role.toLowerCase() === "administrador" ||
+        data.role.toLowerCase() === "cliente"
+      ) {
+        setUserRole(data.role);
+        setShowAnimation(true);
       }
     } catch (error) {
       setMensaje(error.message);
       setTimeout(() => setMensaje(""), 3000);
     }
   };
+  if (showAnimation) {
+    return <LoginAnimation role={userRole} />;
+  }
 
   return (
     <div className="login-container">
@@ -78,6 +87,17 @@ const Login = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
+
+          <div className="text-end mb-3">
+            <button
+              type="button"
+              className="forgot-password-btn"
+              onClick={() => navigate("/forgot-password")}
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+
           <div className="d-grid">
             <button type="submit" className="btn btn-danger w-100">
               Iniciar Sesión

@@ -1,15 +1,17 @@
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import "./Login.css";
 
 const RutaProtegida = ({ rolRequerido }) => {
-  const rol = localStorage.getItem("role");
+  const { role, loading } = useContext(AuthContext);
 
-  if (!rol) {
-    return <Navigate to="/" replace />;
+  if (loading) {
+    return <div className="cargando">Cargando...</div>;
   }
 
-  if (rol !== rolRequerido) {
-    return <Navigate to="/" replace />;
-  }
+  if (!role) return <Navigate to="/" replace />;
+  if (role !== rolRequerido) return <Navigate to="/" replace />;
 
   return <Outlet />;
 };

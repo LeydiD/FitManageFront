@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { obtenerClientePorDNI } from "../api/ClienteApi.js";
+
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -12,9 +13,11 @@ const AuthProvider = ({ children }) => {
     return localStorage.getItem("role") || null;
   });
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchFullUserData = async () => {
-      if (user && user.DNI && !user.altura) {
+      if (role === "cliente" && user && user.DNI && !user.altura) {
         try {
           const datosCompletos = await obtenerClientePorDNI(user.DNI);
           setUser(datosCompletos);
@@ -23,12 +26,18 @@ const AuthProvider = ({ children }) => {
             "Error al obtener los datos completos del usuario:",
             error
           );
+          setUser(null);
+          setRole(null);
+          localStorage.removeItem("user");
+          localStorage.removeItem("role");
+          localStorage.removeItem("DNI");
         }
       }
+      setLoading(false);
     };
 
     fetchFullUserData();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -38,8 +47,18 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("role", role);
   }, [role]);
 
+  const logout = () => {
+    setUser(null);
+    setRole(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
+    localStorage.removeItem("DNI");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, role, setRole }}>
+    <AuthContext.Provider
+      value={{ user, setUser, role, setRole, loading, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

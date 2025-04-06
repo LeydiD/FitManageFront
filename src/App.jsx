@@ -14,12 +14,17 @@ import ClienteLayout from "./components/cliente/ClienteLayout";
 import InicioCliente from "./components/cliente/inicio";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RutaProtegida from "./components/RutaProtegida";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
+
 const App = () => {
   return (
     <Router>
       <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Rutas para Administración */}
           <Route element={<RutaProtegida rolRequerido="Administrador" />}>
