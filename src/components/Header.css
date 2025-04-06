@@ -1,16 +1,37 @@
-/* src/components/Header.css */
 .header {
   width: 100%;
   background-color: #000;
-  padding: 15px 20px;
+  height: 10%;
   display: flex;
-
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  gap: 3%;
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 0.5% 1% rgba(0, 0, 0, 0.2);
 }
 
 .header-logo {
-  max-height: 60px;
+  height: 8vh;
+  width: auto;
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 5vw;
+  display: none;
+  cursor: pointer;
+}
+
+/* Mostrar botón hamburguesa solo en pantallas pequeñas */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  .header-logo {
+    height: 6vh;
+  }
 }

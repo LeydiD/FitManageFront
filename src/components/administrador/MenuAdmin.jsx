@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "./Button";
+import Button from "../Button";
 import "./MenuAdmin.css";
 
 const MenuAdmin = () => {

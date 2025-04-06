@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Registro.css";
 import { registrarCliente } from "../../../api/ClienteApi";
-
+import { useModal } from "../../../context/ModalContext.jsx";
 const Registro = () => {
+  const { showModal } = useModal();
+
   const [formData, setFormData] = useState({
     nombre: "",
     edad: "",
@@ -12,7 +14,6 @@ const Registro = () => {
     email: "",
     altura: "",
     DNI: "",
-    contraseña: "",
   });
 
   const handleChange = (e) => {
@@ -27,7 +28,7 @@ const Registro = () => {
     try {
       const response = await registrarCliente(formData);
       console.log("Cliente registrado con éxito:", response);
-      alert("Registro exitoso");
+      showModal(" ", "Registro exitoso");
       setFormData({
         DNI: "",
         nombre: "",
@@ -36,10 +37,9 @@ const Registro = () => {
         edad: "",
         peso: "",
         altura: "",
-        contraseña: "",
       });
     } catch (error) {
-      alert(error.message);
+      showModal("Error", error.message);
     }
   };
 
@@ -132,16 +132,6 @@ const Registro = () => {
                 name="DNI"
                 className="form-control"
                 value={formData.DNI}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <label>Contraseña</label>
-              <input
-                type="password"
-                name="contraseña"
-                className="form-control"
-                value={formData.contraseña}
                 onChange={handleChange}
               />
             </div>

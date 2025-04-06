@@ -1,5 +1,5 @@
 import React from "react";
-import "./inicioClientes.css";
+import "./InicioClientes.css";
 
 const InicioCliente = () => {
   return (

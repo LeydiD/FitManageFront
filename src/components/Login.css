@@ -21,90 +21,6 @@ body {
   position: relative;
 }
 
-.login-header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-}
-
-.simple-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.dropdown-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.user-icon {
-  margin-right: 8px;
-  font-size: 18px;
-}
-
-.simple-dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  margin-top: 5px;
-  background: #333;
-  border-radius: 8px;
-  width: 180px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  overflow: hidden;
-}
-
-.dropdown-option {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 12px 16px;
-  border: none;
-  background: none;
-  color: white;
-  text-align: left;
-  cursor: pointer;
-}
-
-.dropdown-option:hover {
-  background: #d9534f;
-}
-
-.dropdown-option svg {
-  margin-right: 10px;
-}
-
-/* Contenedor para el input de contraseña y el botón de toggle */
-.password-container {
-  position: relative;
-}
-
-/* Estilo para el botón de mostrar/ocultar contraseña */
-.toggle-password {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #3b3a3a;
-  font-size: 1.2rem;
-}
-
-/* Logo */
 .logo {
   text-align: center;
   margin-bottom: 20px;
@@ -130,13 +46,20 @@ body {
   color: #bbb;
 }
 
-.role-indicator {
-  color: white;
-  text-align: center;
-  margin-bottom: 15px;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3b3a3a;
+  font-size: 1.2rem;
 }
 
 .mensaje {
@@ -155,8 +78,5 @@ body {
 @media (max-width: 480px) {
   .login-card {
     width: 90%;
-  }
-  .simple-dropdown-menu {
-    width: 150px;
   }
 }

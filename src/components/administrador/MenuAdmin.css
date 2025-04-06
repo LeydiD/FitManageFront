@@ -80,3 +80,10 @@
 .logout-button:hover {
   background-color: darkred;
 }
+
+
+@media (max-width: 768px) {
+  .nombre{
+    font-size: 12px;
+  } 
+}
