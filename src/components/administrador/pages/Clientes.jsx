@@ -3,12 +3,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Clientes.css";
 import { obtenerClientes, obtenerClientePorDNI } from "../../../api/ClienteApi";
 
+const EstadoBadge = ({ estado }) => {
+  const estadoCapitalizado = estado.charAt(0).toUpperCase() + estado.slice(1);
+  const clase = estado === "activo" ? "estado-activo" : "estado-inactivo";
+
+  return (
+    <span className={`estado-badge ${clase}`}>
+      {estadoCapitalizado}
+    </span>
+  );
+};
+
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [allClientes, setAllClientes] = useState([]);
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCliente, setSelectedCliente] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [estadoFiltro, setEstadoFiltro] = useState("Todos");
+  const [ordenAscendente, setOrdenAscendente] = useState(true);
 
   useEffect(() => {
     const fetchClientes = async () => {
@@ -25,20 +38,41 @@ const Clientes = () => {
   }, []);
 
   const handleSearch = () => {
-    if (!search) {
-      setClientes(allClientes);
-      return;
-    }
-
-    const filteredClientes = allClientes.filter(cliente =>
-      cliente.DNI.includes(search)
+    const query = searchQuery.toLowerCase();
+    let filtrados = allClientes.filter(cliente =>
+      cliente.nombre.toLowerCase().includes(query) ||
+      cliente.DNI.includes(query)
     );
 
-    if (filteredClientes.length === 0) {
+    if (estadoFiltro !== "Todos") {
+      filtrados = filtrados.filter(cliente =>
+        cliente.estado.toLowerCase() === estadoFiltro
+      );
+    }
+
+    if (filtrados.length === 0) {
       alert("Cliente no encontrado");
     }
 
-    setClientes(filteredClientes);
+    setClientes(filtrados);
+  };
+
+  const handleEstadoChange = (estado) => {
+    setEstadoFiltro(estado);
+
+    const query = searchQuery.toLowerCase();
+    let filtrados = allClientes.filter(cliente =>
+      cliente.nombre.toLowerCase().includes(query) ||
+      cliente.DNI.includes(query)
+    );
+
+    if (estado !== "Todos") {
+      filtrados = filtrados.filter(cliente =>
+        cliente.estado.toLowerCase() === estado
+      );
+    }
+
+    setClientes(filtrados);
   };
 
   const handleViewInfo = async (dni) => {
@@ -51,36 +85,81 @@ const Clientes = () => {
     }
   };
 
+  const ordenarPorNombre = () => {
+    const clientesOrdenados = [...clientes].sort((a, b) => {
+      const nombreA = a.nombre.toLowerCase();
+      const nombreB = b.nombre.toLowerCase();
+
+      if (nombreA < nombreB) return ordenAscendente ? -1 : 1;
+      if (nombreA > nombreB) return ordenAscendente ? 1 : -1;
+      return 0;
+    });
+
+    setClientes(clientesOrdenados);
+    setOrdenAscendente(!ordenAscendente);
+  };
+
   return (
     <div className="clientes-container">
-      <div className="search-bar">
+      <div className="search-bar d-flex align-items-center gap-2">
         <input
           type="text"
-          placeholder="Buscar clientes"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar por nombre o cédula"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button onClick={handleSearch}>Buscar</button>
+        <button className="btn btn-outline-primary" onClick={handleSearch}>
+  <i className="bi bi-search me-1"></i> Buscar
+</button>
+
+
+        <select
+          className="form-select w-auto"
+          value={estadoFiltro}
+          onChange={(e) => handleEstadoChange(e.target.value)}
+        >
+          <option value="Todos">Todos</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
       </div>
 
       <div className="clientes-list">
-        {clientes.map((cliente, index) => (
-          <div key={index} className="cliente-card">
-            <span className="cliente-nombre">{cliente.nombre}</span>
-            <span className="cliente-fecha">17/02/2025</span>
-            <span className="cliente-fecha">17/03/2025</span>
-            <button className="btn btn-info" onClick={() => handleViewInfo(cliente.DNI)}>
-              Ver info
-            </button>
-          </div>
-        ))}
+        <div className="table-responsive">
+          <table className="table table-bordered table-striped">
+            <thead className="table-light">
+              <tr>
+                <th style={{ cursor: "pointer" }} onClick={ordenarPorNombre}>
+                  Nombre {ordenAscendente ? "▲" : "▼"}
+                </th>
+                <th>Tipo Membresia</th>
+                <th>Estado</th>
+                <th>Días Restantes</th>
+                <th>Información</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clientes.map((cliente, index) => (
+                <tr key={index}>
+                  <td>{cliente.nombre}</td>
+                  <td>{cliente.tipo_membresia}</td>
+                  <td><EstadoBadge estado={cliente.estado} /></td>
+                  <td>{cliente.dias_restantes}</td>
+                  <td>
+                    <button className="ver-btn" onClick={() => handleViewInfo(cliente.DNI)}>Ver</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* MODAL DE INFORMACIÓN */}
       {showModal && selectedCliente && (
         <div className="modal fade show" style={{ display: "block" }}>
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div  className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Información del Cliente</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>

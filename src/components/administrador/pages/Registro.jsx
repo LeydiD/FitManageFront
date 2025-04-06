@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Registro.css";
 import { registrarCliente } from "../../../api/ClienteApi";
-
+import logoGym from "../../../assets/LogoGym.jpeg";
 const Registro = () => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -47,7 +47,7 @@ const Registro = () => {
     <div className="registro-container">
       <div className="registro-form">
         <div className="logo-container">
-          <img src="/LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
+          <img src={logoGym} alt="Logo Gym" className="gym-logo" />
         </div>
         <br />
         <h2 className="text-center fw-bold">FORMULARIO DE REGISTRO</h2>

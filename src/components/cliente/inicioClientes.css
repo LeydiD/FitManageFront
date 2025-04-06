@@ -2,7 +2,7 @@
   padding: 2rem;
   text-align: center;
   background-color: #f7f7f7;
-  min-height: calc(100vh - 100px); /* Ajusta si el header ocupa altura */
+  min-height: calc(100vh - 100px);
 }
 
 .inicio-cliente-container h1 {
