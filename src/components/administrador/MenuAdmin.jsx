@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button";
 import "./MenuAdmin.css";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 const MenuAdmin = () => {
-  const navigate = useNavigate(); // Hook para redireccionar
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Elimina el token de autenticación
-    navigate("/login"); // Redirige al login
+    logout();
+    navigate("/login");
   };
 
   return (

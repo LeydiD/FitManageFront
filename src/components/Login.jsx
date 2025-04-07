@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import logo from "../../public/logo.png";
+import logo from "../assets/logo.png";
 import { login } from "../api/LoginApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import LoginAnimation from "./LoginAnimation";
 
 const Login = () => {
   const [DNI, setDNI] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [menuAbierto, setMenuAbierto] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { setUser, setRole } = useContext(AuthContext);
-
   const navigate = useNavigate();
+
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
   const handleDNIChange = (e) => {
     const value = e.target.value;
@@ -27,29 +29,28 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!DNI || !contraseña) {
-      setMensaje("Todos los campos son obligatorios.");
-      return;
-    }
-
     try {
       const data = await login({ DNI, contraseña });
-
       setUser(data.usuario);
       setRole(data.role);
       localStorage.setItem("role", data.role);
       localStorage.setItem("DNI", data.usuario.DNI);
 
-      if (data.role.toLowerCase() === "administrador") {
-        navigate("/admin");
-      } else if (data.role.toLowerCase() === "cliente") {
-        navigate("/cliente");
+      if (
+        data.role.toLowerCase() === "administrador" ||
+        data.role.toLowerCase() === "cliente"
+      ) {
+        setUserRole(data.role);
+        setShowAnimation(true);
       }
     } catch (error) {
       setMensaje(error.message);
       setTimeout(() => setMensaje(""), 3000);
     }
   };
+  if (showAnimation) {
+    return <LoginAnimation role={userRole} />;
+  }
 
   return (
     <div className="login-container">
@@ -86,6 +87,17 @@ const Login = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
+
+          <div className="text-end mb-3">
+            <button
+              type="button"
+              className="forgot-password-btn"
+              onClick={() => navigate("/forgot-password")}
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+
           <div className="d-grid">
             <button type="submit" className="btn btn-danger w-100">
               Iniciar Sesión

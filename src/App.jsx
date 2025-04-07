@@ -15,6 +15,9 @@ import InicioCliente from "./components/cliente/Inicio";
 import ActualizarInformacion from "./components/cliente/pages/ActualizarInfo";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CrearContraseña from "./components/CrearContraseña";
+import RutaProtegida from "./components/RutaProtegida";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   return (
@@ -26,18 +29,24 @@ const App = () => {
             path="/crear-contrasena/:token"
             element={<CrearContraseña />}
           />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Rutas para Administración */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<InicioAdmin />} />
-            <Route path="registro" element={<Registro />} />
-            <Route path="clientes" element={<Clientes />} />
+          <Route element={<RutaProtegida rolRequerido="Administrador" />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<InicioAdmin />} />
+              <Route path="registro" element={<Registro />} />
+              <Route path="clientes" element={<Clientes />} />
+            </Route>
           </Route>
 
           {/* Rutas para Clientes */}
-          <Route path="/cliente" element={<ClienteLayout />}>
-            <Route index element={<InicioCliente />} />
-            <Route path="actualizar" element={<ActualizarInformacion />} />
+          <Route element={<RutaProtegida rolRequerido="Cliente" />}>
+            <Route path="/cliente" element={<ClienteLayout />}>
+              <Route index element={<InicioCliente />} />
+              <Route path="actualizar" element={<ActualizarInformacion />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />
