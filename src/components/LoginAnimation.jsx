@@ -26,7 +26,7 @@ const LoginAnimation = ({ role }) => {
         animate={{ scale: 1.2 }}
         transition={{ duration: 1 }}
       >
-        <img src={animacion} alt="Cargando..." className="animacion-gif" />
+        <img src="Animacion.gif" alt="Cargando..." className="animacion-gif" />
       </motion.div>
 
       <motion.h2

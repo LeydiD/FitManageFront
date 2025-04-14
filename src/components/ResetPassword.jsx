@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ const ResetPassword = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/auth/reset-password/${token}`,
+        `${API_URL}/auth/reset-password/${token}`,
         { nuevaContrasena }
       );
       setMensaje(res.data.message);
