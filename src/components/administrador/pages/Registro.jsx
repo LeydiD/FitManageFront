@@ -48,7 +48,7 @@ const Registro = () => {
     <div className="registro-container">
       <div className="registro-form">
         <div className="logo-container">
-          <img src={logoGym} alt="Logo Gym" className="gym-logo" />
+          <img src="/LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
         </div>
         <br />
         <h2 className="text-center fw-bold">FORMULARIO DE REGISTRO</h2>

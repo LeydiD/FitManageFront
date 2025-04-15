@@ -1,6 +1,9 @@
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+
 export const enviarNuevaContraseña = async (token, contraseña) => {
     try {
-        const response = await fetch(`http://localhost:3000/clientes/crear-contrasena/${token}`, {
+        const response = await fetch(`${API_URL}/clientes/crear-contrasena/${token}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

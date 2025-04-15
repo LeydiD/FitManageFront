@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import logo from "../assets/logo.png";
 import { login } from "../api/LoginApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext } from "react";
@@ -56,7 +55,9 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="logo">
-          <img src={logo} alt="Gym Klinsmann" />
+  
+          <img src="Logo.png" alt="Gym Klinsmann" />
+        
         </div>
 
         <form onSubmit={handleSubmit}>

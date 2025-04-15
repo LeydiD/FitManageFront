@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:3000/clientes";
+
+const API_URL =   `${import.meta.env.VITE_BACKEND_URL}/clientes`;
 
 export const registrarCliente = async (datos) => {
   try {

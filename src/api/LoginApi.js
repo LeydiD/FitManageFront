@@ -1,8 +1,12 @@
-const API_URL = "http://localhost:3000/auth/login";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL_LOGIN = `${API_URL}/auth/login`;
+//const API_URL = "https://fitmanageback-production.up.railway.app/auth/login";
+
+console.log("URL del backend:", import.meta.env.VITE_BACKEND_URL);
 
 export const login = async ({ DNI, contraseña }) => {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_URL_LOGIN, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ DNI, contraseña }),
