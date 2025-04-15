@@ -44,7 +44,6 @@ const ActualizarInfo = () => {
         peso: formData.peso,
       };
 
-      console.log("Enviando datos:", datosActualizados);
       await actualizarCliente(user.DNI, datosActualizados);
 
       setUser(datosActualizados);

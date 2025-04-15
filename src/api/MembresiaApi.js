@@ -1,8 +1,9 @@
-const API_URL = "http://localhost:3000/membresias"; 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL_MEMBRESIAS = `${API_URL}/membresias`;
 
 export async function obtenerMembresias() {
   try {
-    const response = await fetch(`${API_URL}`);
+    const response = await fetch(`${API_URL_MEMBRESIAS}`);
     if (!response.ok) {
       throw new Error("Error al obtener las membresías");
     }
@@ -17,7 +18,7 @@ export async function obtenerMembresias() {
 
 export async function crearMembresia(membresia) {
   try {
-    const response = await fetch(`${API_URL}`, {
+    const response = await fetch(`${API_URL_MEMBRESIAS}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
