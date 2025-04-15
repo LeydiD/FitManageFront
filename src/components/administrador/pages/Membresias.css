@@ -1,0 +1,171 @@
+.container-grande {
+  background: url("https://img.freepik.com/foto-gratis/textura-pared-ladrillo_1194-6421.jpg")
+    no-repeat center center/cover;
+  height: 100%;
+  width: 100%;
+}
+
+.membresias-container {
+  background: white;
+  border-radius: 30px;
+  padding: 2rem;
+  width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.container-grande {
+  display: grid;
+  place-items: center;
+}
+
+.titulo {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.busqueda {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.busqueda input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  background: #e2e2e2;
+}
+
+.btn-buscar {
+  background: #d60000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.btn-nueva {
+  background: #d60000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.membresia-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  align-items: center;
+  background: #e2e2e2;
+  border-radius: 10px;
+  padding: 2%;
+  gap: 5%;
+}
+
+.nombre,
+.precio,
+.duracion {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(83, 93, 104);
+  font-size: 80%;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icono {
+  color: #a80000;
+  cursor: pointer;
+}
+
+.modal1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal1-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal1 input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #dddddd;
+}
+
+.modal1 button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-guardar {
+  background-color: red;
+  color: white;
+}
+
+.btn-cancelar {
+  background-color: red;
+  color: white;
+}
+
+.btn-guardar:hover,
+.btn-cancelar:hover {
+  background-color: #000000;
+}
+
+h3 {
+  font-weight: bold;
+  font-size: 27px;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .container-grande {
+    height: 100vh;
+    width: 100%;
+  }
+
+  .membresias-container {
+    width: 95%;
+    padding: 1rem;
+    border-radius: 20px;
+  }
+
+  .btn-nueva {
+    width: 100%;
+  }
+
+  .acciones {
+    justify-content: center;
+  }
+}
