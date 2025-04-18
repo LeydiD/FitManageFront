@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Membresias.css";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Search } from "lucide-react";
 import { obtenerMembresias, crearMembresia } from "../../../api/MembresiaApi";
 import { useModal } from "../../../context/ModalContext.jsx";
 
 const Membresias = () => {
   const { showModal } = useModal();
   const [membresias, setMembresias] = useState([]);
+  const [membresiaSeleccionada, setMembresiaSeleccionada] = useState(null);
   const [busqueda, setBusqueda] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [nuevaMembresia, setNuevaMembresia] = useState({
@@ -39,6 +40,10 @@ const Membresias = () => {
     setModalVisible(true);
   };
 
+  const handleVerDetalle = (membresia) => {
+    setMembresiaSeleccionada(membresia);
+  };
+  
   const handleCloseModal = () => {
     setModalVisible(false);
     setNuevaMembresia({ tipo: "", duracion: "", precio: "" });
@@ -91,10 +96,10 @@ const Membresias = () => {
           {membresiasFiltradas.map((m, index) => (
             <div key={index} className="membresia-item">
               <span className="nombre">{m.tipo}</span>
-              <span className="duracion">{m.duracion}</span>
               <span className="precio">${m.precio}</span>
 
               <div className="acciones">
+                <Search className="icono" onClick={() => handleVerDetalle(m)} />
                 <Pencil className="icono" />
                 <Trash2 className="icono" />
               </div>
@@ -141,6 +146,20 @@ const Membresias = () => {
           </div>
         </div>
       )}
+      {/* Modal para ver detalle de membresía */}
+    {membresiaSeleccionada && (
+      <div className="modal1">
+        <div className="modal1-content">
+          <h3>Detalle de Membresía</h3>
+          <p><strong>Tipo:</strong> {membresiaSeleccionada.tipo}</p>
+          <p><strong>Duración:</strong> {membresiaSeleccionada.duracion}</p>
+          <p><strong>Precio:</strong> ${membresiaSeleccionada.precio}</p>
+          <button className="btn-cancelar" onClick={() => setMembresiaSeleccionada(null)}>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    )}
     </div>
   );
 };

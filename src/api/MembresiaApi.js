@@ -8,6 +8,7 @@ export async function obtenerMembresias() {
       throw new Error("Error al obtener las membresías");
     }
     const data = await response.json();
+    console.log(response.json);
     return data;
   } catch (error) {
     console.error("Error en la API de membresías:", error);

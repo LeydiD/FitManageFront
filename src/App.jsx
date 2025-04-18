@@ -19,6 +19,7 @@ import RutaProtegida from "./components/RutaProtegida";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import Membresias from "./components/administrador/pages/Membresias.jsx";
+import Pagos from "./components/administrador/pages/Pagos.jsx";
 const App = () => {
   return (
     <Router>
@@ -39,6 +40,7 @@ const App = () => {
               <Route path="registro" element={<Registro />} />
               <Route path="clientes" element={<Clientes />} />
               <Route path="membresias" element={<Membresias />} />
+              <Route path="registrar-pago" element={<Pagos />} />
             </Route>
           </Route>
 
