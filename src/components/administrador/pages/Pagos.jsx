@@ -80,10 +80,9 @@ const Pagos = () => {
       console.log("Pago registrado exitosamente:", resultado);
       mostrarModal("Exito","Pago registrado exitosamente");
 
-      // Opcional: resetear formulario (pero mantener el DNI si quieres)
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
-      mostrarModal("Error","Error al registrar el pago. Verifica los datos.");
+      mostrarModal("Error", error.message);
     }
   };
 
