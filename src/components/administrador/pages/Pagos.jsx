@@ -3,7 +3,7 @@ import "./Pagos.css";
 import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
 import { obtenerClientePorDNI } from "../../../api/ClienteApi";
-import { useModal } from "../../../context/ModalContext";
+import Modal from "../../Modal.jsx";
 
 const Pagos = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +13,25 @@ const Pagos = () => {
   });
 
   const [membresias, setMembresias] = useState([]);
-  const { showModal } = useModal();
+  const [modalInfo, setModalInfo] = useState({
+    show: false,
+    title: "",
+    body: "",
+    type: "info",
+  });
+
+  const mostrarModal = (titulo, cuerpo, tipo = "info") => {
+    setModalInfo({
+      show: true,
+      title: titulo,
+      body: cuerpo,
+      type: tipo,
+    });
+  };
+
+  const cerrarModal = () => {
+    setModalInfo((prev) => ({ ...prev, show: false }));
+  };
 
   useEffect(() => {
     const cargarMembresias = async () => {
@@ -22,6 +40,7 @@ const Pagos = () => {
         setMembresias(data);
       } catch (error) {
         console.error("Error al cargar membresías:", error);
+        mostrarModal("Error", "No se pudieron cargar las membresías", "error");
       }
     };
 
@@ -49,9 +68,9 @@ const Pagos = () => {
     e.preventDefault();
 
     if (!formData.DNI || !formData.membresia) {
-      showModal(
-        "Error",
-        "Debe ingresar el documento de identidad y seleccionar una membresía.",
+      mostrarModal(
+        "Érror",
+        "Debe ingresar la cédula y seleccionar una membresía.",
         "error"
       );
       return;
@@ -59,17 +78,24 @@ const Pagos = () => {
 
     try {
       const cliente = await obtenerClientePorDNI(formData.DNI);
+      if (!cliente) {
+        mostrarModal("Error", "Cliente no encontrado.", "error");
+        return;
+      }
+
       const id_cliente = cliente.DNI;
       const id_membresia = formData.membresia;
 
       const resultado = await registrarPago({ id_cliente, id_membresia });
-      showModal("Éxito", "Pago registrado exitosamente.", "success");
+      console.log("Pago registrado exitosamente:", resultado);
+      mostrarModal("Éxito", "Pago registrado exitosamente", "success");
 
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
-      showModal(
-        "Error al registrar el pago",
-        "Verifica los datos ingresados.",
+      console.error("Error al registrar el pago:", error);
+      mostrarModal(
+        "Error",
+        error.message || "Error al registrar el pago",
         "error"
       );
     }
@@ -113,7 +139,7 @@ const Pagos = () => {
             name="precio"
             value={
               formData.precio
-                ? `$ ${Number(formData.precio).toLocaleString()}`
+                ? `\$ ${Number(formData.precio).toLocaleString()}`
                 : ""
             }
             className="input-field"
@@ -129,6 +155,7 @@ const Pagos = () => {
         show={modalInfo.show}
         title={modalInfo.title}
         body={modalInfo.body}
+        type={modalInfo.type}
         onClose={cerrarModal}
       />
     </div>
