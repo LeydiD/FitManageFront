@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import animacion from "../assets/Animacion.gif";
 import "./Login.css";
 const LoginAnimation = ({ role }) => {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const LoginAnimation = ({ role }) => {
         animate={{ scale: 1.2 }}
         transition={{ duration: 1 }}
       >
-        <img src="Animacion.gif" alt="Cargando..." className="animacion-gif" />
+        <img src="/Animacion.gif" alt="Cargando..." className="animacion-gif" />
       </motion.div>
 
       <motion.h2

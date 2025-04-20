@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Pagos.css";
-import logoGym from "../../../assets/LogoGym.jpeg";
 import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
 import { obtenerClientePorDNI } from "../../../api/ClienteApi";
@@ -72,7 +71,7 @@ const Pagos = () => {
     <div className="pago-container">
       <div className="pago-form">
         <div className="logo-container">
-          <img src={logoGym} alt="Logo Gym" className="gym-logo" />
+          <img src="/LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
         </div>
         <h2 className="titulo-pago">REGISTRAR PAGO</h2>
         <form onSubmit={handleSubmit}>
