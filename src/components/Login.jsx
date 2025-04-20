@@ -34,6 +34,7 @@ const Login = () => {
       setRole(data.role);
       localStorage.setItem("role", data.role);
       localStorage.setItem("DNI", data.usuario.DNI);
+      localStorage.setItem("user", JSON.stringify(data.usuario));
 
       if (
         data.role.toLowerCase() === "administrador" ||
@@ -55,9 +56,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="logo">
-  
           <img src="Logo.png" alt="Gym Klinsmann" />
-        
         </div>
 
         <form onSubmit={handleSubmit}>

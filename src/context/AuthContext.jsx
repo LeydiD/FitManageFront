@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchFullUserData = async () => {
-      if (role === "cliente" && user && user.DNI && !user.altura) {
+      if (role === "Cliente" && user && user.DNI && !user.altura) {
         try {
           const datosCompletos = await obtenerClientePorDNI(user.DNI);
           setUser(datosCompletos);
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchFullUserData();
-  }, []);
+  }, [user, role]);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));

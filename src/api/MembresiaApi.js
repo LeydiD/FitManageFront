@@ -59,3 +59,22 @@ export async function actualizarMembresia(id_membresia, membresia) {
     throw error;
   }
 }
+
+
+export async function desactivarMembresia(id_membresia) {
+  try {
+    const response = await fetch(`${API_URL_MEMBRESIAS}/desactivar/${id_membresia}`, {
+      method: "PUT"
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al desactivar la membresía");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al desactivar la membresía:", error);
+    throw error;
+  }
+}

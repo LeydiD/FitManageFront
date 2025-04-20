@@ -5,6 +5,7 @@ import {
   obtenerMembresias,
   crearMembresia,
   actualizarMembresia,
+  desactivarMembresia,
 } from "../../../api/MembresiaApi";
 import { useModal } from "../../../context/ModalContext.jsx";
 
@@ -15,6 +16,9 @@ const Membresias = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalEditarVisible, setModalEditarVisible] = useState(false);
   const [busqueda, setBusqueda] = useState("");
+  const [modalConfirmacionVisible, setModalConfirmacionVisible] =
+    useState(false);
+  const [membresiaAEliminar, setMembresiaAEliminar] = useState(null);
 
   const [nuevaMembresia, setNuevaMembresia] = useState({
     tipo: "",
@@ -41,9 +45,10 @@ const Membresias = () => {
 
   const membresiasFiltradas = membresias.filter(
     (m) =>
-      m.tipo.toLowerCase().includes(busqueda.toLowerCase()) ||
-      m.precio.toString().toLowerCase().includes(busqueda.toLowerCase()) ||
-      m.duracion.toLowerCase().includes(busqueda.toLowerCase())
+      m.activa === 1 &&
+      (m.tipo.toLowerCase().includes(busqueda.toLowerCase()) ||
+        m.precio.toString().toLowerCase().includes(busqueda.toLowerCase()) ||
+        m.duracion.toLowerCase().includes(busqueda.toLowerCase()))
   );
 
   const handleOpenModal = () => {
@@ -134,6 +139,34 @@ const Membresias = () => {
     } catch (error) {
       showModal("Error al actualizar", error.message);
     }
+  };
+
+  const confirmarEliminacion = (membresia) => {
+    setMembresiaAEliminar(membresia);
+    setModalConfirmacionVisible(true);
+  };
+
+  const handleEliminarMembresia = async () => {
+    try {
+      await desactivarMembresia(membresiaAEliminar.id_membresia);
+      setMembresias((prev) =>
+        prev.filter((m) => m.id_membresia !== membresiaAEliminar.id_membresia)
+      );
+      showModal(
+        "Membresía eliminada",
+        "La membresía fue eliminada exitosamente."
+      );
+      setModalConfirmacionVisible(false);
+      setMembresiaAEliminar(null);
+    } catch (error) {
+      showModal("Error al eliminar", error.message);
+      setModalConfirmacionVisible(false);
+    }
+  };
+
+  const handleCerrarModalConfirmacion = () => {
+    setModalConfirmacionVisible(false);
+    setMembresiaAEliminar(null);
   };
 
   return (
@@ -261,6 +294,27 @@ const Membresias = () => {
               onClick={() => setMembresiaSeleccionada(null)}
             >
               Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {modalConfirmacionVisible && (
+        <div className="modal1">
+          <div className="modal1-content">
+            <h3>Confirmar </h3>
+            <p>
+              ¿Seguro que deseas eliminar la membresía "
+              {membresiaAEliminar.tipo}"?
+            </p>
+            <button className="btn-guardar" onClick={handleEliminarMembresia}>
+              Confirmar
+            </button>
+            <button
+              className="btn-cancelar"
+              onClick={handleCerrarModalConfirmacion}
+            >
+              Cancelar
             </button>
           </div>
         </div>

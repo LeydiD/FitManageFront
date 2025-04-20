@@ -65,7 +65,7 @@
 
 .membresia-item {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr auto;
   align-items: center;
   background: #e2e2e2;
   border-radius: 10px;
