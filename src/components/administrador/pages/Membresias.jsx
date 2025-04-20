@@ -181,7 +181,6 @@ const Membresias = () => {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
           />
-          <button className="btn-buscar">Buscar</button>
         </div>
 
         <button className="btn-nueva" onClick={handleOpenModal}>
@@ -265,6 +264,7 @@ const Membresias = () => {
               onChange={handleInputEditarChange}
               placeholder="Nuevo precio"
             />
+
             <button className="btn-guardar" onClick={handleActualizarMembresia}>
               Actualizar
             </button>

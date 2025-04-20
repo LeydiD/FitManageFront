@@ -13,7 +13,7 @@ const AdminLayout = () => {
     <div className="admin-layout">
       <Header toggleMenu={toggleMenu} />
       <div className={`admin-container ${menuOpen ? "menu-open" : ""}`}>
-        <MenuAdmin />
+        <MenuAdmin isOpen={menuOpen} setIsOpen={setMenuOpen} />
         <div
           className="admin-content"
           onClick={() => menuOpen && setMenuOpen(false)}

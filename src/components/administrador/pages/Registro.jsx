@@ -28,7 +28,7 @@ const Registro = () => {
     try {
       const response = await registrarCliente(formData);
       console.log("Cliente registrado con éxito:", response);
-      showModal(" ", "Registro exitoso");
+      showModal("Éxito", "Registro exitoso", "success");
       setFormData({
         DNI: "",
         nombre: "",
@@ -39,7 +39,7 @@ const Registro = () => {
         altura: "",
       });
     } catch (error) {
-      showModal("Error", error.message);
+      showModal("Error", error.message, "error");
     }
   };
 

@@ -5,22 +5,22 @@
   align-items: center;
   background: url("https://img.freepik.com/foto-gratis/textura-pared-ladrillo_1194-6421.jpg")
     no-repeat center center/cover;
-  height: 100%;
+  height: calc(100vh - 70px);
 }
 
 .registro-form {
   font-weight: bold;
   background: white;
   border-radius: 50px;
-  width: 70%;
+  width: 65%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   padding: 2%;
   margin-top: 1%;
-
 }
+
 h2 {
-  margin-top: 30px;
+  margin-top: 10px;
   font-size: 20px;
   text-align: center;
 }
@@ -29,7 +29,7 @@ h2 {
   display: flex;
   justify-content: center;
   position: absolute;
-  top: -40px;
+  top: -60px;
   left: 50%;
   transform: translateX(-50%);
   background: white;
@@ -46,7 +46,7 @@ h2 {
 }
 
 .form-control {
-  background: #d9d9d9;
+  background: #dedddd;
   border: none;
   padding: 8px;
   border-radius: 15px;
@@ -58,7 +58,7 @@ h2 {
 }
 
 label {
-  padding: 4px;
+  padding: 3px;
 }
 
 .btn-danger {
@@ -70,7 +70,10 @@ label {
   background-color: #e11a1a;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 878px) {
+  .registro-container {
+    height: auto;
+  }
   .logo-container {
     position: absolute;
     top: -45px;
@@ -83,12 +86,12 @@ label {
   }
 
   .registro-form {
-   margin-top: 15%;
-   padding: 5%;
-   width: 85%;
+    margin-top: 10%;
+    padding: 5%;
+    width: 85%;
   }
- 
-  .btn-danger{
+
+  .btn-danger {
     padding: auto;
   }
 }

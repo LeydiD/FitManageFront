@@ -3,6 +3,7 @@ import "./Pagos.css";
 import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
 import { obtenerClientePorDNI } from "../../../api/ClienteApi";
+import { useModal } from "../../../context/ModalContext";
 
 const Pagos = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Pagos = () => {
   });
 
   const [membresias, setMembresias] = useState([]);
+  const { showModal } = useModal();
 
   useEffect(() => {
     const cargarMembresias = async () => {
@@ -47,7 +49,11 @@ const Pagos = () => {
     e.preventDefault();
 
     if (!formData.DNI || !formData.membresia) {
-      alert("Debe ingresar la cédula y seleccionar una membresía.");
+      showModal(
+        "Error",
+        "Debe ingresar el documento de identidad y seleccionar una membresía.",
+        "error"
+      );
       return;
     }
 
@@ -57,13 +63,16 @@ const Pagos = () => {
       const id_membresia = formData.membresia;
 
       const resultado = await registrarPago({ id_cliente, id_membresia });
-      console.log("Pago registrado exitosamente:", resultado);
-      alert("Pago registrado exitosamente");
+      showModal("Éxito", "Pago registrado exitosamente.", "success");
 
       // Opcional: resetear formulario (pero mantener el DNI si quieres)
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
-      alert("Error al registrar el pago. Verifica los datos.");
+      showModal(
+        "Error al registrar el pago",
+        "Verifica los datos ingresados.",
+        "error"
+      );
     }
   };
 

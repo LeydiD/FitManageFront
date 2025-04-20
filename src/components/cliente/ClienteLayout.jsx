@@ -13,7 +13,7 @@ const ClienteLayout = () => {
     <div className="cliente-layout">
       <Header toggleMenu={toggleMenu} />
       <div className={`cliente-container ${menuOpen ? "menu-open" : ""}`}>
-        <MenuCliente />
+        <MenuCliente isOpen={menuOpen} setIsOpen={setMenuOpen} />
         <div
           className="cliente-content"
           onClick={() => menuOpen && setMenuOpen(false)}

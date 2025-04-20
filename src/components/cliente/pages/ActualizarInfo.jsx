@@ -33,6 +33,21 @@ const ActualizarInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isUnchanged =
+      formData.email === user.email &&
+      formData.altura === user.altura &&
+      formData.telefono === user.telefono &&
+      formData.objetivo === user.objetivo &&
+      formData.peso === user.peso;
+
+    if (isUnchanged) {
+      showModal(
+        "Error",
+        "No se ha realizado ningún cambio. No se puede actualizar.",
+        "error"
+      );
+      return;
+    }
 
     try {
       const datosActualizados = {
@@ -47,10 +62,10 @@ const ActualizarInfo = () => {
       await actualizarCliente(user.DNI, datosActualizados);
 
       setUser(datosActualizados);
-      showModal("Éxito", "Información actualizada correctamente");
+      showModal("Éxito", "Información actualizada correctamente", "success");
     } catch (error) {
       console.error("Error al actualizar cliente:", error);
-      showModal("Error", error.message);
+      showModal("Error", error.message, "error");
     }
   };
 

@@ -4,7 +4,7 @@ import Button from "../Button";
 import "./MenuAdmin.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
 
-const MenuAdmin = () => {
+const MenuAdmin = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
@@ -12,29 +12,34 @@ const MenuAdmin = () => {
     logout();
     navigate("/login");
   };
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    }
+  };
 
   return (
-    <div className="admin-menu">
+    <div className={`admin-menu ${isOpen ? "open" : "closed"}`}>
       <div className="admin-profile">
         <h2 className="nombre">Administrador</h2>
       </div>
       <nav className="menu">
-        <Link to="/admin">
+        <Link to="/admin" onClick={handleLinkClick}>
           <Button text="Inicio" />
         </Link>
-        <Link to="/admin/registro">
+        <Link to="/admin/registro" onClick={handleLinkClick}>
           <Button text="Registro" />
         </Link>
-        <Link to="/admin/clientes">
+        <Link to="/admin/clientes" onClick={handleLinkClick}>
           <Button text="Clientes" />
         </Link>
-        <Link to="/admin/membresias">
+        <Link to="/admin/membresias" onClick={handleLinkClick}>
           <Button text="Membresías" />
         </Link>
-        <Link to="/admin/registrar-pago">
+        <Link to="/admin/registrar-pago" onClick={handleLinkClick}>
           <Button text="Registrar Pago" />
         </Link>
-        <Link to="/admin/ganancias">
+        <Link to="/admin/ganancias" onClick={handleLinkClick}>
           <Button text="Ganancias" />
         </Link>
       </nav>
