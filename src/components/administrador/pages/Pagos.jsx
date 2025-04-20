@@ -3,6 +3,7 @@ import "./Pagos.css";
 import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
 import { obtenerClientePorDNI } from "../../../api/ClienteApi";
+import Modal from "../../Modal.jsx";
 
 const Pagos = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,26 @@ const Pagos = () => {
   });
 
   const [membresias, setMembresias] = useState([]);
-
+  const [modalInfo, setModalInfo] = useState({
+    show: false,
+    title: '',
+    body: '',
+  });
+  const mostrarModal = (titulo, cuerpo) => {
+    setModalInfo({
+      show: true,
+      title: titulo,
+      body: cuerpo,
+    });
+  };
+  
+  const cerrarModal = () => {
+    setModalInfo({
+      ...modalInfo,
+      show: false,
+    });
+  };
+  
   useEffect(() => {
     const cargarMembresias = async () => {
       try {
@@ -47,7 +67,7 @@ const Pagos = () => {
     e.preventDefault();
 
     if (!formData.DNI || !formData.membresia) {
-      alert("Debe ingresar la cédula y seleccionar una membresía.");
+      mostrarModal("Advertencia", "Debe ingresar la cédula y seleccionar una membresía.");
       return;
     }
 
@@ -58,12 +78,12 @@ const Pagos = () => {
 
       const resultado = await registrarPago({ id_cliente, id_membresia });
       console.log("Pago registrado exitosamente:", resultado);
-      alert("Pago registrado exitosamente");
+      mostrarModal("Exito","Pago registrado exitosamente");
 
       // Opcional: resetear formulario (pero mantener el DNI si quieres)
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
-      alert("Error al registrar el pago. Verifica los datos.");
+      mostrarModal("Error","Error al registrar el pago. Verifica los datos.");
     }
   };
 
@@ -117,6 +137,13 @@ const Pagos = () => {
           </button>
         </form>
       </div>
+        <Modal
+      show={modalInfo.show}
+      title={modalInfo.title}
+      body={modalInfo.body}
+      onClose={cerrarModal}
+  />
+
     </div>
   );
 };
