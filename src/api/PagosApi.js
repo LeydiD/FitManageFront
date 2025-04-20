@@ -13,11 +13,13 @@ export const registrarPago = async ({ id_cliente, id_membresia}) => {
         }),
       });
   
-      if (!response.ok) {
-        throw new Error("Error en la solicitud al registrar el pago.");
-      }
-  
       const data = await response.json();
+
+      if (!response.ok) {
+        console.log("Response status:", response.status);
+         console.log("Raw response:", data);
+        throw new Error(data.message || "Error en la solicitud al registrar el pago.");
+      }
       return data;
     } catch (error) {
       console.error("Error al registrar el pago:", error);

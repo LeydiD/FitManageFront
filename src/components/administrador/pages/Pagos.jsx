@@ -65,7 +65,6 @@ const Pagos = () => {
       const resultado = await registrarPago({ id_cliente, id_membresia });
       showModal("Éxito", "Pago registrado exitosamente.", "success");
 
-      // Opcional: resetear formulario (pero mantener el DNI si quieres)
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
       showModal(
@@ -126,6 +125,12 @@ const Pagos = () => {
           </button>
         </form>
       </div>
+      <Modal
+        show={modalInfo.show}
+        title={modalInfo.title}
+        body={modalInfo.body}
+        onClose={cerrarModal}
+      />
     </div>
   );
 };
