@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "./Membresias.css";
 import { Pencil, Trash2, Search } from "lucide-react";
-import { obtenerMembresias, crearMembresia } from "../../../api/MembresiaApi";
+import {
+  obtenerMembresias,
+  crearMembresia,
+  actualizarMembresia,
+} from "../../../api/MembresiaApi";
 import { useModal } from "../../../context/ModalContext.jsx";
 
 const Membresias = () => {
   const { showModal } = useModal();
   const [membresias, setMembresias] = useState([]);
   const [membresiaSeleccionada, setMembresiaSeleccionada] = useState(null);
-  const [busqueda, setBusqueda] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalEditarVisible, setModalEditarVisible] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
+
   const [nuevaMembresia, setNuevaMembresia] = useState({
     tipo: "",
     duracion: "",
+    precio: "",
+  });
+  const [editarMembresia, setEditarMembresia] = useState({
+    id_membresia: "",
+    tipo: "",
     precio: "",
   });
 
@@ -25,14 +36,13 @@ const Membresias = () => {
         console.error("Error al cargar las membresías:", error);
       }
     };
-
     cargarMembresias();
   }, []);
 
   const membresiasFiltradas = membresias.filter(
     (m) =>
       m.tipo.toLowerCase().includes(busqueda.toLowerCase()) ||
-      m.precio.toLowerCase().includes(busqueda.toLowerCase()) ||
+      m.precio.toString().toLowerCase().includes(busqueda.toLowerCase()) ||
       m.duracion.toLowerCase().includes(busqueda.toLowerCase())
   );
 
@@ -43,10 +53,15 @@ const Membresias = () => {
   const handleVerDetalle = (membresia) => {
     setMembresiaSeleccionada(membresia);
   };
-  
+
   const handleCloseModal = () => {
     setModalVisible(false);
     setNuevaMembresia({ tipo: "", duracion: "", precio: "" });
+  };
+
+  const handleCloseEditarModal = () => {
+    setModalEditarVisible(false);
+    setEditarMembresia({ id_membresia: "", tipo: "", precio: "" });
   };
 
   const handleInputChange = (e) => {
@@ -54,29 +69,77 @@ const Membresias = () => {
     setNuevaMembresia((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleInputEditarChange = (e) => {
+    const { name, value } = e.target;
+    setEditarMembresia((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleGuardarMembresia = async () => {
     try {
-      if (
-        !nuevaMembresia.tipo ||
-        !nuevaMembresia.duracion ||
-        !nuevaMembresia.precio
-      ) {
-        showModal("Error al crear ", "Todos los campos son obligatorios.");
+      const { tipo, duracion, precio } = nuevaMembresia;
+      if (!tipo || !duracion || !precio) {
+        showModal("Error al crear", "Todos los campos son obligatorios.");
         return;
       }
       const nueva = await crearMembresia(nuevaMembresia);
       setMembresias([...membresias, nueva]);
       handleCloseModal();
-      showModal("Guardado Correctamente ", "Su membresía se agregó con éxito");
+      showModal("Guardado correctamente", "La membresía se agregó con éxito.");
     } catch (error) {
-      showModal("Error al guardar la nueva membresía:", error.message);
+      showModal("Error al guardar la membresía", error.message);
+    }
+  };
+
+  const handleEditar = (membresia) => {
+    setEditarMembresia({
+      id_membresia: membresia.id_membresia,
+      tipo: membresia.tipo,
+      precio: membresia.precio,
+    });
+    setModalEditarVisible(true);
+  };
+
+  const handleActualizarMembresia = async () => {
+    try {
+      const { id_membresia, tipo, precio } = editarMembresia;
+
+      if (!tipo && !precio) {
+        showModal(
+          "Campos vacíos",
+          "Debes modificar al menos el tipo o el precio."
+        );
+        return;
+      }
+
+      const datosActualizados = {};
+      if (tipo) datosActualizados.tipo = tipo;
+      if (precio) datosActualizados.precio = precio;
+
+      const actualizada = await actualizarMembresia(
+        id_membresia,
+        datosActualizados
+      );
+
+      setMembresias((prev) =>
+        prev.map((m) =>
+          m.id_membresia === id_membresia ? actualizada.membresia : m
+        )
+      );
+
+      setModalEditarVisible(false);
+      showModal(
+        "Actualización exitosa",
+        "Membresía actualizada correctamente."
+      );
+    } catch (error) {
+      showModal("Error al actualizar", error.message);
     }
   };
 
   return (
     <div className="container-grande">
       <div className="membresias-container">
-        <h2 className="titulo">MEMBRESIAS</h2>
+        <h2 className="titulo">MEMBRESÍAS</h2>
 
         <div className="busqueda">
           <input
@@ -100,8 +163,11 @@ const Membresias = () => {
 
               <div className="acciones">
                 <Search className="icono" onClick={() => handleVerDetalle(m)} />
-                <Pencil className="icono" />
-                <Trash2 className="icono" />
+                <Pencil className="icono" onClick={() => handleEditar(m)} />
+                <Trash2
+                  className="icono"
+                  onClick={() => confirmarEliminacion(m)}
+                />
               </div>
             </div>
           ))}
@@ -146,20 +212,59 @@ const Membresias = () => {
           </div>
         </div>
       )}
-      {/* Modal para ver detalle de membresía */}
-    {membresiaSeleccionada && (
-      <div className="modal1">
-        <div className="modal1-content">
-          <h3>Detalle de Membresía</h3>
-          <p><strong>Tipo:</strong> {membresiaSeleccionada.tipo}</p>
-          <p><strong>Duración:</strong> {membresiaSeleccionada.duracion}</p>
-          <p><strong>Precio:</strong> ${membresiaSeleccionada.precio}</p>
-          <button className="btn-cancelar" onClick={() => setMembresiaSeleccionada(null)}>
-            Cerrar
-          </button>
+
+      {/* Modal para editar membresía */}
+      {modalEditarVisible && (
+        <div className="modal1">
+          <div className="modal1-content">
+            <h3>Editar membresía</h3>
+            <input
+              type="text"
+              name="tipo"
+              value={editarMembresia.tipo}
+              onChange={handleInputEditarChange}
+              placeholder="Nuevo tipo"
+            />
+            <input
+              type="number"
+              name="precio"
+              value={editarMembresia.precio}
+              onChange={handleInputEditarChange}
+              placeholder="Nuevo precio"
+            />
+            <button className="btn-guardar" onClick={handleActualizarMembresia}>
+              Actualizar
+            </button>
+            <button className="btn-cancelar" onClick={handleCloseEditarModal}>
+              Cancelar
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
+
+      {/* Modal para ver detalle */}
+      {membresiaSeleccionada && (
+        <div className="modal1">
+          <div className="modal1-content">
+            <h3>Detalle de Membresía</h3>
+            <p>
+              <strong>Tipo:</strong> {membresiaSeleccionada.tipo}
+            </p>
+            <p>
+              <strong>Duración:</strong> {membresiaSeleccionada.duracion}
+            </p>
+            <p>
+              <strong>Precio:</strong> ${membresiaSeleccionada.precio}
+            </p>
+            <button
+              className="btn-cancelar"
+              onClick={() => setMembresiaSeleccionada(null)}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

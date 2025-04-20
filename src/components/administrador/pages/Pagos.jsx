@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Pagos.css";
 import logoGym from "../../../assets/LogoGym.jpeg";
-import { obtenerMembresias } from "../../../api/MembresiaApi.js"; 
+import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
 import { obtenerClientePorDNI } from "../../../api/ClienteApi";
 
@@ -46,28 +46,28 @@ const Pagos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!formData.DNI || !formData.membresia) {
       alert("Debe ingresar la cédula y seleccionar una membresía.");
       return;
     }
-  
+
     try {
       const cliente = await obtenerClientePorDNI(formData.DNI);
       const id_cliente = cliente.DNI;
-      const id_membresia=  formData.membresia;
-  
+      const id_membresia = formData.membresia;
+
       const resultado = await registrarPago({ id_cliente, id_membresia });
       console.log("Pago registrado exitosamente:", resultado);
       alert("Pago registrado exitosamente");
-  
+
       // Opcional: resetear formulario (pero mantener el DNI si quieres)
       setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
     } catch (error) {
       alert("Error al registrar el pago. Verifica los datos.");
     }
   };
-  
+
   return (
     <div className="pago-container">
       <div className="pago-form">
