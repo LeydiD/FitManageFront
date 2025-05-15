@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Ganancias.css";
 import { Bar } from "react-chartjs-2";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -123,6 +125,14 @@ const Ganancias = () => {
     }
   };
 
+  const handleGenerarCSV = () => {
+    const csv = Papa.unparse(detalleGanancias, {
+      delimiter: ";",
+    });
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "detalle_ganancias.csv");
+  };
+
   useEffect(() => {
     if (frecuencia === "Anual") {
       handleBuscarGrafico();
@@ -142,7 +152,15 @@ const Ganancias = () => {
   }, [frecuencia]);
 
   return (
-    <div className="container" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+    <div
+      className="container"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+      }}
+    >
       <div className="ganancias-container" style={{ textAlign: "center" }}>
         <h2>CONSULTAR GANANCIAS</h2>
 
@@ -261,6 +279,17 @@ const Ganancias = () => {
           </div>
           <div className="campo">
             <input type="text" value={`$${gananciasTotales}`} readOnly />
+          </div>
+          <div style={{ marginTop: "1rem" }}>
+            <button
+              className="generar-excel"
+              onClick={handleGenerarCSV}
+              disabled={
+                !inicioTabla || !finTabla || detalleGanancias.length === 0
+              }
+            >
+              Generar CSV
+            </button>
           </div>
         </div>
       </div>

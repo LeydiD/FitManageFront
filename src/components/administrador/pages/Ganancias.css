@@ -197,3 +197,79 @@ h2 {
 .selects-container {
   justify-content: center;
 }
+.generar-excel {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generar-excel:hover:enabled {
+  background-color: #388e3c;
+}
+
+.generar-excel:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+  .ganancias-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .selects-container,
+  .filtros {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .selects-container select,
+  .selects-container input,
+  .input-frecuencia {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .grafico {
+    width: 100%;
+    height: auto;
+  }
+
+  .tabla-contenedor,
+  .tabla-resultados table {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .tabla-resultados table {
+    min-width: unset;
+  }
+
+  .campo {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .campo input {
+    width: 100%;
+  }
+
+  .generar-excel {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.tabla-resultados {
+  overflow-x: auto;
+  width: 100%;
+}
