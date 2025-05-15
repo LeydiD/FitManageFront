@@ -1,0 +1,199 @@
+.container {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("https://img.freepik.com/foto-gratis/textura-pared-ladrillo_1194-6421.jpg")
+    no-repeat center center/cover;
+}
+
+.ganancias-container {
+  width: 80%;
+  margin: 30px auto;
+  background: white;
+  border-radius: 30px;
+  padding: 3%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 5%;
+}
+
+h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+.selects-container {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.custom-select {
+  padding: 10px 20px;
+  border: none;
+  background-color: #e6e6e6;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+  padding-right: 35px;
+}
+
+.custom-select:focus {
+  outline: none;
+}
+
+.seccion-grafico {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.grafico {
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 12px;
+  width: 80%;
+  height: 80%;
+}
+
+.filtros {
+  display: flex;
+  gap: 3%;
+  align-items: end;
+  margin: 25px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.fecha {
+  display: flex;
+  flex-direction: column;
+}
+
+.fecha label {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.fecha input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #e8e8e8;
+  font-size: 14px;
+}
+
+.buscar {
+  padding: 10px 20px;
+  background-color: #e60000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buscar:hover {
+  background-color: #c10000;
+}
+
+.resultado {
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding-bottom: 5%;
+}
+
+.campo {
+  text-align: right;
+  flex: 1;
+  min-width: 180px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.campo input {
+  text-align: right;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #e0e0e0;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding-right: 5%;
+}
+.subtitulo {
+  text-align: center;
+  padding: 3%;
+  font-weight: bold;
+}
+
+.tabla-contenedor {
+  width: 80%;
+  height: 50%;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+/* Estilos previos para la tabla */
+.tabla-resultados table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla-resultados thead {
+  background-color: #0c0c0c;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.tabla-resultados tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.rango-personalizado {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.rango-personalizado input {
+  margin: 0 5px;
+}
+
+.rango-personalizado button {
+  margin-left: 10px;
+}
+
+.busqueda-tabla h3 {
+  text-align: center;
+}
+.selects-container {
+  justify-content: center;
+}
