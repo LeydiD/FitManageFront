@@ -138,9 +138,7 @@ const Pagos = () => {
             type="text"
             name="precio"
             value={
-              formData.precio
-                ? `\$ ${Number(formData.precio).toLocaleString()}`
-                : ""
+              formData.precio? `\$ ${Number(formData.precio).toLocaleString()}`: ""
             }
             className="input-field"
             disabled

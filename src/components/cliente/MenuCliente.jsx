@@ -37,6 +37,9 @@ const MenuCliente = ({ isOpen, setIsOpen }) => {
         <Link to="/cliente/rutinas" onClick={handleLinkClick}>
           <Button text="Rutinas" />
         </Link>
+        <Link to="/cliente/registrar-asistencia" onClick={handleLinkClick}>
+          <Button text="Registrar Asistencia" />
+        </Link>
       </nav>
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión
