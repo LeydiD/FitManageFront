@@ -396,7 +396,6 @@ const Ganancias = () => {
                 }`}
                 onClick={() => setTipoReporte("Ganancias")}
               >
-                <span className="toggle-icon">💰</span>
                 Ganancias
               </button>
               <button
@@ -405,7 +404,7 @@ const Ganancias = () => {
                 }`}
                 onClick={() => setTipoReporte("Membresias")}
               >
-                <span className="toggle-icon">📊</span>
+              
                 Membresías
               </button>
             </div>

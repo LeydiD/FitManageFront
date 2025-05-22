@@ -23,21 +23,24 @@
   --white: #ffffff;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --border-radius: 12px;
   --border-radius-lg: 16px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Container principal */
 .dashboard-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #ffd8db 0%, #ffffff 100%);
+  background: url("https://img.freepik.com/foto-gratis/textura-pared-ladrillo_1194-6421.jpg")
+    no-repeat center center/cover;
   padding: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", sans-serif;
 }
 
 .main-card {
@@ -52,7 +55,11 @@
 
 /* Header Section */
 .header-section {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
   color: var(--white);
   padding: 2rem;
   display: flex;
@@ -507,16 +514,16 @@
   .dashboard-container {
     padding: 1rem;
   }
-  
+
   .chart-container {
     height: 300px;
   }
-  
+
   .filters-row {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .filter-group {
     min-width: auto;
   }
@@ -526,69 +533,73 @@
   .dashboard-container {
     padding: 0.5rem;
   }
-  
+
   .header-section {
     padding: 1.5rem;
     flex-direction: column;
     text-align: center;
   }
-  
+
   .main-title {
     font-size: 1.5rem;
   }
-  
+
   .subtitle {
     font-size: 1rem;
   }
-  
+
   .controls-section,
   .chart-section,
   .table-section {
     padding: 1rem;
   }
-  
+
   .toggle-buttons {
     flex-direction: column;
   }
-  
+
   .table-header {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .table-controls {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .date-inputs {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .action-buttons {
     flex-direction: column;
   }
-  
+
   .chart-container {
     height: 250px;
     padding: 1rem;
   }
-  
+
   .total-card {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .modern-table {
     font-size: 0.875rem;
+     text-align: center;
+    justify-content: center;
   }
-  
+
   .modern-table th,
   .modern-table td {
     padding: 0.75rem 0.5rem;
+    text-align: center;
+    justify-content: center;
   }
-  
+
   .client-info {
     flex-direction: column;
     gap: 0.5rem;
@@ -600,17 +611,30 @@
     width: 48px;
     height: 48px;
   }
-  
+
   .main-title {
     font-size: 1.25rem;
   }
-  
+
   .total-amount {
     font-size: 1.5rem;
   }
-  
+
   .chart-container {
     height: 200px;
     padding: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .modern-table {
+    min-width: 600px;
+    width: 100%;
+    display: table;
   }
 }
