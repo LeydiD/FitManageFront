@@ -52,3 +52,42 @@ export const obtenerDetalleGananciasPorRango = async (inicio, fin) => {
         throw error;
     }
 };
+
+
+export const obtenerMembresiasMasVendidasPorAnio = async (anio) => {
+    try {
+        const response = await axios.get(`${API_URL}/ganancias/membresias/anio`, {
+            params: { anio }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener membresías más vendidas por año:", error);
+        throw error;
+    }
+};
+
+// Obtener membresías más vendidas por mes
+export const obtenerMembresiasMasVendidasPorMes = async (anio, mes) => {
+    try {
+        const response = await axios.get(`${API_URL}/ganancias/membresias/mes`, {
+            params: { anio, mes }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener membresías más vendidas por mes:", error);
+        throw error;
+    }
+};
+
+// Obtener membresías más vendidas por rango de fechas
+export const obtenerMembresiasMasVendidasPorRango = async (fechaInicio, fechaFin) => {
+    try {
+        const response = await axios.get(`${API_URL}/ganancias/membresias/rango`, {
+            params: { fechaInicio, fechaFin }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener membresías más vendidas por rango de fechas:", error);
+        throw error;
+    }
+};
