@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { registrarAsistencia } from '../../../api/AsistenciasApi';
+import React, { useState, useEffect } from 'react';
+import { registrarAsistencia } from '../../../api/AsistenciasApi.js';
 
 const RegistrarAsistencia = () => {
   const fechaHoy = new Date().toLocaleDateString('es-ES');
@@ -14,16 +14,21 @@ const RegistrarAsistencia = () => {
     
     try {
       const resultado = await registrarAsistencia();
-      setMessage('Asistencia registrada correctamente');
+      setMessage('Tu asistencia ha sido registrada con éxito.');
       console.log('Asistencia registrada:', resultado);
     } catch (error) {
       setIsError(true);
-      setMessage(error.message || 'Error al registrar asistencia');
+      setMessage('Tu asistencia ya fue registrada el día de hoy');
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Ejecutar automáticamente cuando el componente se monta
+  useEffect(() => {
+    handleRegistrarAsistencia();
+  }, []);
 
   return (
     <div
@@ -47,18 +52,12 @@ const RegistrarAsistencia = () => {
               </p>
               <p className="text-muted fs-5 mb-4 text-center">{fechaHoy}</p>
 
-              <button 
-                className="btn btn-danger w-100 fw-bold"
-                onClick={handleRegistrarAsistencia}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Registrando...
-                  </>
-                ) : 'Registrar'}
-              </button>
+              {isLoading && (
+                <div className="text-center">
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Registrando...
+                </div>
+              )}
 
               {message && (
                 <div className={`mt-3 alert ${isError ? 'alert-danger' : 'alert-success'}`}>

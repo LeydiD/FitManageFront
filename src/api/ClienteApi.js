@@ -83,3 +83,14 @@ export const actualizarCliente = async (dni, datos) => {
     throw error;
   }
 };
+
+export const obtenerClienteConDias = async (dni) => {
+  try {
+    const response = await fetch(`${API_URL}/diasRestantes/${dni}`);
+    if (!response.ok) throw new Error("Cliente no encontrado");
+    return await response.json();
+  } catch (error) {
+    console.error("Error en obtenerClientePorDNI:", error);
+    throw error;
+  }
+};

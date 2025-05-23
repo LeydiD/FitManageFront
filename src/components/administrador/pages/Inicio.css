@@ -17,3 +17,9 @@
 .logo-box img {
   max-height: 300px;
 }
+
+.form-box {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
