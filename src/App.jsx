@@ -22,6 +22,7 @@ import Membresias from "./components/administrador/pages/Membresias.jsx";
 import Pagos from "./components/administrador/pages/Pagos.jsx";
 import Ganancias from "./components/administrador/pages/Ganancias.jsx";
 import RegistrarAsistencia from "./components/cliente/pages/RegistrarAsistencia.jsx";
+import Asistencias from "./components/cliente/pages/Asistencias.jsx";
 const App = () => {
   return (
     <Router>
@@ -53,6 +54,7 @@ const App = () => {
               <Route index element={<InicioCliente />} />
               <Route path="actualizar" element={<ActualizarInformacion />} />
               <Route path ="registrar-asistencia" element={<RegistrarAsistencia/>}/>
+              <Route path="asistencias" element={<Asistencias />} />
             </Route>
           </Route>
 
