@@ -20,6 +20,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import Membresias from "./components/administrador/pages/Membresias.jsx";
 import Pagos from "./components/administrador/pages/Pagos.jsx";
+import Ganancias from "./components/administrador/pages/Ganancias.jsx";
 import RegistrarAsistencia from "./components/cliente/pages/RegistrarAsistencia.jsx";
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
               <Route path="clientes" element={<Clientes />} />
               <Route path="membresias" element={<Membresias />} />
               <Route path="registrar-pago" element={<Pagos />} />
+              <Route path="ganancias" element={<Ganancias />} />
             </Route>
           </Route>
 
