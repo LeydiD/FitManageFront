@@ -1,4 +1,3 @@
-/* Reset y variables */
 * {
   box-sizing: border-box;
 }
@@ -589,7 +588,7 @@
 
   .modern-table {
     font-size: 0.875rem;
-     text-align: center;
+    text-align: center;
     justify-content: center;
   }
 

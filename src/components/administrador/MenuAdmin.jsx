@@ -21,7 +21,7 @@ const MenuAdmin = ({ isOpen, setIsOpen }) => {
   return (
     <div className={`admin-menu ${isOpen ? "open" : "closed"}`}>
       <div className="admin-profile">
-        <h2 className="nombre">Administrador</h2>
+        <h2 className="nombre-admin">Administrador</h2>
       </div>
       <nav className="menu">
         <Link to="/admin" onClick={handleLinkClick}>

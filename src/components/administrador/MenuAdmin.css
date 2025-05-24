@@ -27,14 +27,15 @@
   margin-bottom: 10px;
 }
 
-.nombre {
+.nombre-admin {
   font-weight: bold;
-  font-size: 22px;
-  color: #e0e0e0;
   text-align: center;
   border-bottom: 2px solid #f74f4f;
   padding-bottom: 5px;
   width: 80%;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(83, 93, 104);
+  font-size: 0.95rem;
 }
 
 .menu {
@@ -93,7 +94,6 @@
   background-color: #b71c1c;
 }
 
-/* Responsive para móviles */
 @media (max-width: 768px) {
   .admin-menu {
     position: fixed;
