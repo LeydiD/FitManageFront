@@ -44,16 +44,17 @@ const Asistencias = () => {
 
   const formatWeekday = (locale, date) => {
     const weekdays = isMobile
-      ? ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
+      ? ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
       : [
+          "Domingo",
           "Lunes",
           "Martes",
           "Miércoles",
           "Jueves",
           "Viernes",
           "Sábado",
-          "Domingo",
         ];
+
     return weekdays[date.getDay()];
   };
 
