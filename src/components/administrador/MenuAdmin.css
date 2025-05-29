@@ -11,20 +11,27 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
 }
-
 .admin-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
 }
 
-/* Ícono de perfil */
-.admin-profile::before {
-  content: "👤";
-  font-size: 60px;
-  color: #cccccc;
-  margin-bottom: 10px;
+.admin-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.admin-name {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
 }
 
 .nombre-admin {
