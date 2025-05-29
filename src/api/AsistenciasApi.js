@@ -39,3 +39,15 @@ export async function obtenerAsistenciasPorCliente(dni) {
     return [];
   }
 }
+
+export async function obtenerAsistenciasSemanal(dni) {
+  try {
+    const response = await fetch(`${API_URL}/semanal/${dni}`);
+    if (!response.ok) throw new Error("Error al obtener asistencias");
+    const fechas = await response.json();
+    return fechas;
+  } catch (error) {
+    throw new Error("Error al obtener asistencias semanales: " + error.message);
+  }
+}
+

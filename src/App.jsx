@@ -23,6 +23,7 @@ import Pagos from "./components/administrador/pages/Pagos.jsx";
 import Ganancias from "./components/administrador/pages/Ganancias.jsx";
 import RegistrarAsistencia from "./components/cliente/pages/RegistrarAsistencia.jsx";
 import Asistencias from "./components/cliente/pages/Asistencias.jsx";
+import Rutinas from "./components/cliente/pages/Rutinas.jsx";
 const App = () => {
   return (
     <Router>
@@ -53,8 +54,12 @@ const App = () => {
             <Route path="/cliente" element={<ClienteLayout />}>
               <Route index element={<InicioCliente />} />
               <Route path="actualizar" element={<ActualizarInformacion />} />
-              <Route path ="registrar-asistencia" element={<RegistrarAsistencia/>}/>
+              <Route
+                path="registrar-asistencia"
+                element={<RegistrarAsistencia />}
+              />
               <Route path="asistencias" element={<Asistencias />} />
+              <Route path="rutinas" element={<Rutinas />} />
             </Route>
           </Route>
 
