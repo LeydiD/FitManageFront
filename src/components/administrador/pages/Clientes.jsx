@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Clientes.css";
-import { obtenerClientes, obtenerClientePorDNI } from "../../../api/ClienteApi";
-import { useModal } from "../../../context/ModalContext";
+import { obtenerClientes, obtenerClientePorDNI } from "../../../api/ClienteApi.js";
+import { useModal } from "../../../context/ModalContext.jsx";
 
 const EstadoBadge = ({ estado }) => {
   const estadoCapitalizado = estado.charAt(0).toUpperCase() + estado.slice(1);

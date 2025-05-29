@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "./rutinas.css";
+import "./Rutinas.css";
 import { generarRutina } from "../../../api/RutinaApi.js";
 import { AuthContext } from "../../../context/AuthContext.jsx";
 import ReactMarkdown from "react-markdown";
@@ -50,45 +50,44 @@ const Rutinas = () => {
 
   const limpiarMarkdown = (texto) => {
     return texto
-      .replace(/[*_`>#-]+/g, "")        // elimina *, _, `, #, >, - usados en markdown
-      .replace(/\n{2,}/g, "\n")         // reduce múltiples saltos de línea
-      .replace(/\n/g, "\n\n");          // agrega espacio entre líneas
+      .replace(/[*_`>#-]+/g, "") // elimina *, _, `, #, >, - usados en markdown
+      .replace(/\n{2,}/g, "\n") // reduce múltiples saltos de línea
+      .replace(/\n/g, "\n\n"); // agrega espacio entre líneas
   };
 
- const handleDownloadPDF = () => {
-  const doc = new jsPDF();
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(16);
-  doc.text("Rutina Personalizada", 105, 20, null, null, "center");
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(16);
+    doc.text("Rutina Personalizada", 105, 20, null, null, "center");
 
-  doc.setFontSize(11);
-  doc.text(`Nombre: ${user.nombre}`, 15, 30);
-  doc.text(`Objetivo: ${user.objetivo}`, 15, 36);
-  doc.text(`Altura: ${user.altura} cm  |  Peso: ${user.peso} kg`, 15, 42);
-  doc.line(15, 45, 195, 45);
+    doc.setFontSize(11);
+    doc.text(`Nombre: ${user.nombre}`, 15, 30);
+    doc.text(`Objetivo: ${user.objetivo}`, 15, 36);
+    doc.text(`Altura: ${user.altura} cm  |  Peso: ${user.peso} kg`, 15, 42);
+    doc.line(15, 45, 195, 45);
 
-  let y = 52;
+    let y = 52;
 
-  messages.forEach((msg, i) => {
-    if (msg.from === "bot" && i > 0) {
-      const textoLimpio = limpiarMarkdown(msg.text);
-      const lineas = doc.splitTextToSize(textoLimpio, 180);
+    messages.forEach((msg, i) => {
+      if (msg.from === "bot" && i > 0) {
+        const textoLimpio = limpiarMarkdown(msg.text);
+        const lineas = doc.splitTextToSize(textoLimpio, 180);
 
-      lineas.forEach((linea) => {
-        if (y > 270) {
-          doc.addPage();
-          y = 20;
-        }
-        doc.text(linea, 15, y);
-        y += 6; // incremento pequeño y constante
-      });
-      y += 4; // espacio extra entre mensajes
-    }
-  });
+        lineas.forEach((linea) => {
+          if (y > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text(linea, 15, y);
+          y += 6; // incremento pequeño y constante
+        });
+        y += 4; // espacio extra entre mensajes
+      }
+    });
 
-  doc.save("conversacion.pdf");
-};
-
+    doc.save("conversacion.pdf");
+  };
 
   const hayRutinaGenerada = messages.some(
     (msg, index) => msg.from === "bot" && index > 0
@@ -105,7 +104,9 @@ const Rutinas = () => {
         {loading && (
           <div className="message bot">
             <div className="typing-dots">
-              <span></span><span></span><span></span>
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           </div>
         )}
@@ -119,10 +120,10 @@ const Rutinas = () => {
           placeholder="Escribe tu objetivo o pregunta..."
           disabled={loading}
         />
-        <button onClick={handleSend} disabled={loading}>Enviar</button>
-        {hayRutinaGenerada && (
-          <button onClick={handleDownloadPDF}>PDF</button>
-        )}
+        <button onClick={handleSend} disabled={loading}>
+          Enviar
+        </button>
+        {hayRutinaGenerada && <button onClick={handleDownloadPDF}>PDF</button>}
       </div>
     </div>
   );
