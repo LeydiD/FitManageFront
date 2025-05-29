@@ -5,19 +5,19 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Login from "./components/Login";
-import AdminLayout from "./components/administrador/AdminLayout";
-import InicioAdmin from "./components/administrador/pages/Inicio";
-import Registro from "./components/administrador/pages/Registro";
-import Clientes from "./components/administrador/pages/Clientes";
-import ClienteLayout from "./components/cliente/ClienteLayout";
-import InicioCliente from "./components/cliente/Inicio";
-import ActualizarInformacion from "./components/cliente/pages/ActualizarInfo";
-import ErrorBoundary from "./components/ErrorBoundary";
-import CrearContraseña from "./components/CrearContraseña";
-import RutaProtegida from "./components/RutaProtegida";
-import ForgotPassword from "./components/ForgotPassword";
-import ResetPassword from "./components/ResetPassword";
+import Login from "./components/Login.jsx";
+import AdminLayout from "./components/administrador/AdminLayout.jsx";
+import InicioAdmin from "./components/administrador/pages/Inicio.jsx";
+import Registro from "./components/administrador/pages/Registro.jsx";
+import Clientes from "./components/administrador/pages/Clientes.jsx";
+import ClienteLayout from "./components/cliente/ClienteLayout.jsx";
+import InicioCliente from "./components/cliente/Inicio.jsx";
+import ActualizarInformacion from "./components/cliente/pages/ActualizarInfo.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import CrearContraseña from "./components/CrearContraseña.jsx";
+import RutaProtegida from "./components/RutaProtegida.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
 import Membresias from "./components/administrador/pages/Membresias.jsx";
 import Pagos from "./components/administrador/pages/Pagos.jsx";
 import Ganancias from "./components/administrador/pages/Ganancias.jsx";
