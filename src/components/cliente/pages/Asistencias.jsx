@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { obtenerAsistenciasPorCliente } from "../../../api/AsistenciasApi";
+import { obtenerAsistenciasPorCliente } from "../../../api/AsistenciasApi.js";
 import { AuthContext } from "../../../context/AuthContext";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
