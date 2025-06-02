@@ -24,6 +24,9 @@ import Ganancias from "./components/administrador/pages/Ganancias.jsx";
 import RegistrarAsistencia from "./components/cliente/pages/RegistrarAsistencia.jsx";
 import Asistencias from "./components/cliente/pages/Asistencias.jsx";
 import Rutinas from "./components/cliente/pages/Rutinas.jsx";
+import Notificaciones from "./components/cliente/pages/Notificaciones.jsx";
+import EnviarNotificacion from "./components/administrador/pages/EnviarNotificacion.jsx";
+
 const App = () => {
   return (
     <Router>
@@ -41,6 +44,10 @@ const App = () => {
           <Route element={<RutaProtegida rolRequerido="Administrador" />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<InicioAdmin />} />
+              <Route
+                path="enviar-notificacion"
+                element={<EnviarNotificacion />}
+              />
               <Route path="registro" element={<Registro />} />
               <Route path="clientes" element={<Clientes />} />
               <Route path="membresias" element={<Membresias />} />
@@ -60,6 +67,7 @@ const App = () => {
               />
               <Route path="asistencias" element={<Asistencias />} />
               <Route path="rutinas" element={<Rutinas />} />
+              <Route path="notificaciones" element={<Notificaciones />} />
             </Route>
           </Route>
 

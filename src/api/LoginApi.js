@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 const API_URL_LOGIN = `${API_URL}/auth/login`;
+
 //const API_URL = "https://fitmanageback-production.up.railway.app/auth/login";
 
 console.log("URL del backend:", import.meta.env.VITE_BACKEND_URL);
@@ -18,6 +19,28 @@ export const login = async ({ DNI, contraseña }) => {
     return data;
   } catch (error) {
     console.error("Error en login:", error.message);
+    throw error;
+  }
+};
+
+export const cambiarAvatar = async ({ DNI, avatar }) => {
+  const API_URL_AVATAR = `${API_URL}/auth/cambiar-avatar/${DNI}`;
+  console.log("URL a la que se hace la petición:", API_URL_AVATAR);
+  try {
+    const response = await fetch(API_URL_AVATAR, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ avatar }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error al actualizar avatar");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error al cambiar avatar:", error.message);
     throw error;
   }
 };

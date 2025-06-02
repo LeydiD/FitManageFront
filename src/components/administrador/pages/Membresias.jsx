@@ -194,12 +194,24 @@ const Membresias = () => {
               <span className="precio">${m.precio}</span>
 
               <div className="acciones">
-                <Search className="icono" onClick={() => handleVerDetalle(m)} />
-                <Pencil className="icono" onClick={() => handleEditar(m)} />
-                <Trash2
-                  className="icono"
-                  onClick={() => confirmarEliminacion(m)}
-                />
+                <div className="icono-tooltip">
+                  <Search
+                    className="icono"
+                    onClick={() => handleVerDetalle(m)}
+                  />
+                  <span className="tooltip-text">Ver detalles</span>
+                </div>
+                <div className="icono-tooltip">
+                  <Pencil className="icono" onClick={() => handleEditar(m)} />
+                  <span className="tooltip-text">Editar</span>
+                </div>
+                <div className="icono-tooltip">
+                  <Trash2
+                    className="icono"
+                    onClick={() => confirmarEliminacion(m)}
+                  />
+                  <span className="tooltip-text">Eliminar</span>
+                </div>
               </div>
             </div>
           ))}

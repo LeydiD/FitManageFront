@@ -200,12 +200,20 @@
 
 @media (max-width: 480px) {
   .clientes-list .table-responsive {
-    max-height: 350px;
+    max-height: 280px;
     overflow-y: auto;
   }
   .cliente-card {
     padding: 10px;
     font-size: 13px;
+  }
+
+  .search-bar select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   .search-bar select option {

@@ -51,7 +51,7 @@
   flex-direction: column;
   gap: 1rem;
   max-height: 300px;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
 .lista::-webkit-scrollbar {
@@ -158,6 +158,47 @@ h3 {
   color: #2c2c2c;
 }
 
+.icono-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: 80px;
+  background: #222;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 0;
+  position: absolute;
+  z-index: 9999;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+
+.icono-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .membresias-container {
     width: 95%;
@@ -235,5 +276,6 @@ h3 {
 
   .lista {
     max-height: 50vh;
+    overflow-y: auto;
   }
 }

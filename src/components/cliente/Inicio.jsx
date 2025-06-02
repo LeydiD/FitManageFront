@@ -51,20 +51,20 @@ const Inicio = () => {
   }, [user]);
 
   const dias = asistencias.map((dia) => {
-  const fechaObj = new Date(dia.fecha + "T00:00:00");
-  const fechaFormateada = fechaObj.toLocaleDateString("es-ES", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-  const nombreDia = fechaObj.toLocaleDateString("es-ES", { weekday: "long" });
+    const fechaObj = new Date(dia.fecha + "T00:00:00");
+    const fechaFormateada = fechaObj.toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    const nombreDia = fechaObj.toLocaleDateString("es-ES", { weekday: "long" });
 
-  return {
-    name: nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1), 
-    date: fechaFormateada,
-    active: dia.asistio,
-  };
-});
+    return {
+      name: nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1),
+      date: fechaFormateada,
+      active: dia.asistio,
+    };
+  });
 
   const fechaFinFormateada = fechaFin
     ? new Date(fechaFin).toLocaleDateString("es-ES", {
@@ -95,8 +95,8 @@ const Inicio = () => {
             key={index}
             className={`day-circle ${day.active ? "active" : ""}`}
           >
-            <span>{day.name}</span>
-            <span>{day.date}</span>
+            <span className="day-name">{day.name}</span>
+            <span className="day-date">{day.date}</span>
           </div>
         ))}
       </div>
