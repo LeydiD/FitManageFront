@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../Header";
-import MenuAdmin from "./MenuAdmin";
+import Header from "../Header.jsx";
+import MenuAdmin from "./MenuAdmin.jsx";
 import "./AdminLayout.css";
 
 const AdminLayout = () => {

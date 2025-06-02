@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Registro.css";
-import { registrarCliente } from "../../../api/ClienteApi";
+import { registrarCliente } from "../../../api/ClienteApi.js";
 import { useModal } from "../../../context/ModalContext.jsx";
 const Registro = () => {
   const { showModal } = useModal();

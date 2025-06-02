@@ -22,7 +22,12 @@ const MenuCliente = ({ isOpen, setIsOpen }) => {
   return (
     <div className={`cliente-menu ${isOpen ? "open" : "closed"}`}>
       <div className="cliente-profile">
-        <h2 className="nombre">{user.nombre}</h2>
+        <img
+          src="/public/avatar7.png"
+          alt="Avatar"
+          className="cliente-avatar"
+        />
+        <span className="cliente-name">{user.nombre}</span>
       </div>
       <nav className="menu">
         <Link to="/cliente" onClick={handleLinkClick}>

@@ -1,5 +1,5 @@
 
-const API_URL =   `${import.meta.env.VITE_BACKEND_URL}/clientes`;
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/clientes`;
 
 export const registrarCliente = async (datos) => {
   try {
@@ -91,6 +91,16 @@ export const obtenerClienteConDias = async (dni) => {
     return await response.json();
   } catch (error) {
     console.error("Error en obtenerClientePorDNI:", error);
+    throw error;
+  }
+};
+
+export const obtenerFinSuscripcion = async (dni) => {
+  try {
+    const response = await fetch(`${API_URL}/fecha-fin/${dni}`);
+    if (!response.ok) throw new Error("Cliente no encontrado");
+    return response.json();
+  } catch (error) {
     throw error;
   }
 };

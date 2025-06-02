@@ -21,7 +21,8 @@ const MenuAdmin = ({ isOpen, setIsOpen }) => {
   return (
     <div className={`admin-menu ${isOpen ? "open" : "closed"}`}>
       <div className="admin-profile">
-        <h2 className="nombre-admin">Administrador</h2>
+        <img src="/public/avatar1.png" alt="Avatar" className="admin-avatar" />
+        <span className="admin-name">Administrador</span>
       </div>
       <nav className="menu">
         <Link to="/admin" onClick={handleLinkClick}>

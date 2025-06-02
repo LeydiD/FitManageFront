@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Inicio.css';
 import logo from "../../../../public/Logo.png";
-import { obtenerClienteConDias } from '../../../api/ClienteApi'; 
+import { obtenerClienteConDias } from '../../../api/ClienteApi.js'; 
 import { registrarAsistencia } from '../../../api/AsistenciasApi.js';
 
 function Inicio() {

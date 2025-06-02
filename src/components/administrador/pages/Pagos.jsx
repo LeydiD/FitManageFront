@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Pagos.css";
 import { obtenerMembresias } from "../../../api/MembresiaApi.js";
 import { registrarPago } from "../../../api/PagosApi.js";
-import { obtenerClientePorDNI } from "../../../api/ClienteApi";
+import { obtenerClientePorDNI } from "../../../api/ClienteApi.js";
 import Modal from "../../Modal.jsx";
 
 const Pagos = () => {
