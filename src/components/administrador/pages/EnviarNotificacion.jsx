@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import "./EnviarNotificacion.css";
+import { crearNotificacion } from "../../../api/NotificacionApi";
 
 const EnviarNotificacion = () => {
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Notificación enviada");
+    setLoading(true);
+    setFeedback("");
+
+    try {
+      await crearNotificacion(asunto, mensaje);
+      setFeedback(" Notificación enviada exitosamente");
+      setAsunto("");
+      setMensaje("");
+    } catch (error) {
+      setFeedback(`Error: ${error.message || "No se pudo enviar la notificación"}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,9 +54,10 @@ const EnviarNotificacion = () => {
               rows={5}
             />
           </div>
-          <button type="submit" className="enviar-noti-btn">
-            Enviar
+          <button type="submit" className="enviar-noti-btn" disabled={loading}>
+            {loading ? "Enviando..." : "Enviar"}
           </button>
+          {feedback && <p>{feedback}</p>}
         </form>
       </div>
     </div>
