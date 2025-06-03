@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button";
 import "./MenuAdmin.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { useModal } from "../../context/ModalContext.jsx";
 import { cambiarAvatar } from "../../api/LoginApi.js";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -14,30 +15,30 @@ const AVATARES = [
   "avatar5.png",
   "avatar6.png",
   "avatar7.png",
-  "avatar7.png",
+  "avatar8.png",
 ];
 
 const MenuAdmin = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const { logout, user, setUser } = useContext(AuthContext);
+  const { showModal } = useModal();
   const [showSelector, setShowSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(
-    user?.avatar || "avatar1.png"
+    user?.avatar || "avatar.png"
   );
   const [loading, setLoading] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [responsiveRadius, setResponsiveRadius] = useState(105); // desktop
   const [circleSize, setCircleSize] = useState(38); // desktop
 
-  // Responsive: cambia radio y tamaño de circulitos
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 478) {
-        setResponsiveRadius(65); // móvil
-        setCircleSize(28); // circulitos pequeños en móvil
+        setResponsiveRadius(65);
+        setCircleSize(28);
       } else {
-        setResponsiveRadius(90); // desktop (más cerca del avatar)
-        setCircleSize(38); // circulitos grandes en desktop
+        setResponsiveRadius(90);
+        setCircleSize(38);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -71,8 +72,18 @@ const MenuAdmin = ({ isOpen, setIsOpen }) => {
       await cambiarAvatar({ DNI: user.DNI, avatar: selectedAvatar });
       setUser({ ...user, avatar: selectedAvatar });
       setShowSelector(false);
+      showModal("Éxito", "Avatar actualizado correctamente", "success");
+      setTimeout(() => {
+        const modalElement = document.querySelector(".modal");
+        if (modalElement) {
+          const closeButton = modalElement.querySelector(
+            'button[aria-label="Close"]'
+          );
+          if (closeButton) closeButton.click();
+        }
+      }, 1000);
     } catch (error) {
-      alert("Error al actualizar avatar");
+      showModal("Error", "Error al actualizar avatar", "error");
     }
     setLoading(false);
   };
@@ -272,7 +283,7 @@ const MenuAdmin = ({ isOpen, setIsOpen }) => {
           <Button text="Registrar Pago" />
         </Link>
         <Link to="/admin/ganancias" onClick={handleLinkClick}>
-          <Button text="Ganancias" />
+          <Button text="Ingresos" />
         </Link>
       </nav>
       <button className="logout-button" onClick={handleLogout}>

@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Modal = ({ title, body, show, onClose, type = "info" }) => {
+const Modal = ({ title, body, show, onClose, onCancel, type = "info" }) => {
   const headerColors = {
     error: "rgb(241, 110, 93)",
     success: "#d1e7dd",
@@ -23,6 +23,10 @@ const Modal = ({ title, body, show, onClose, type = "info" }) => {
     error: <FaExclamationCircle style={{ marginRight: "8px" }} />,
     success: <FaCheckCircle style={{ marginRight: "8px" }} />,
     info: <FaInfoCircle style={{ marginRight: "8px" }} />,
+  };
+
+  const handleCancel = () => {
+    setModalData({ ...modalData, show: false, onConfirm: null });
   };
 
   return (
@@ -119,8 +123,51 @@ const Modal = ({ title, body, show, onClose, type = "info" }) => {
             </p>
           </div>
 
-          {/* Footer oculto */}
-          <div className="modal-footer" style={{ display: "none" }}></div>
+          {type === "info" && (
+            <div 
+              className="modal-footer" 
+              style={{ 
+                display: "flex", 
+                justifyContent: "flex-end",
+                padding: "16px 20px",
+                borderTop: "1px solid #dee2e6"
+              }}
+            >
+              <button
+                onClick={onCancel}
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#6c757d",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  marginRight: "8px",
+                  transition: "background-color 0.2s"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#5a6268"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#6c757d"}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={onClose}
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#0d6efd",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  transition: "background-color 0.2s"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#0b5ed7"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#0d6efd"}
+              >
+                Confirmar
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

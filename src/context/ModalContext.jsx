@@ -10,23 +10,32 @@ export const ModalProvider = ({ children }) => {
     title: "",
     body: "",
     type: "info",
+    onConfirm: null
   });
 
-  const showModal = (title, body, type = "info") => {
+  const showModal = (title, body, type = "info", onConfirm = null) => {
     setModalData({
       show: true,
       title,
       body,
       type,
+      onConfirm
     });
   };
 
   const closeModal = () => {
-    setModalData({ ...modalData, show: false });
+    if (modalData.onConfirm && modalData.type === "info") {
+      modalData.onConfirm();
+    }
+    setModalData({ ...modalData, show: false, onConfirm: null });
+  };
+
+  const cancelModal = () => {
+    setModalData({ ...modalData, show: false, onConfirm: null });
   };
 
   return (
-    <ModalContext.Provider value={{ showModal, closeModal }}>
+    <ModalContext.Provider value={{ showModal, closeModal, cancelModal }}>
       {children}
 
       <Modal
@@ -35,6 +44,7 @@ export const ModalProvider = ({ children }) => {
         body={modalData.body}
         type={modalData.type}
         onClose={closeModal}
+        onCancel={cancelModal}
       />
     </ModalContext.Provider>
   );

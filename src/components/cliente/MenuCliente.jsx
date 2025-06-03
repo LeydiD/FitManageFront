@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button.jsx";
 import "./MenuCliente.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { useModal } from "../../context/ModalContext.jsx";
 import { cambiarAvatar } from "../../api/LoginApi.js";
 import { FaBell } from "react-icons/fa"; // Instala con: npm i react-icons
 
@@ -14,16 +15,18 @@ const AVATARES = [
   "avatar5.png",
   "avatar6.png",
   "avatar7.png",
+  "avatar8.png",
 ];
 
 const MenuCliente = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const { user, setUser, logout } = useContext(AuthContext);
+  const { showModal } = useModal();
 
   // Avatar selector states
   const [showSelector, setShowSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(
-    user?.avatar || "avatar1.png"
+    user?.avatar || "avatar.png"
   );
   const [loading, setLoading] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
@@ -67,8 +70,19 @@ const MenuCliente = ({ isOpen, setIsOpen }) => {
       await cambiarAvatar({ DNI: user.DNI, avatar: selectedAvatar });
       setUser({ ...user, avatar: selectedAvatar });
       setShowSelector(false);
+      showModal("Éxito", "Avatar actualizado correctamente", "success");
+      // Auto cerrar el modal después de 2 segundos
+      setTimeout(() => {
+        const modalElement = document.querySelector(".modal");
+        if (modalElement) {
+          const closeButton = modalElement.querySelector(
+            'button[aria-label="Close"]'
+          );
+          if (closeButton) closeButton.click();
+        }
+      }, 1000);
     } catch (error) {
-      alert("Error al actualizar avatar");
+      showModal("Error", "Error al actualizar avatar", "error");
     }
     setLoading(false);
   };

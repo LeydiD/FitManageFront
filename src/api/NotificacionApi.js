@@ -14,3 +14,29 @@ export const crearNotificacion = async (titulo, mensaje) => {
     throw error.response?.data || { message: "Error desconocido" };
   }
 };
+
+export const obtenerNotificacionesPorDNI = async (dni) => {
+  try {
+    const response = await axios.get(`${API_URL_NOTIFICACIONES}/${dni}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Error desconocido" };
+  }
+};
+
+export const marcarNotificacionLeida = async (id) => {
+  try {
+    const response = await axios.patch(`${API_URL_NOTIFICACIONES}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Error desconocido" };
+  }
+};
+
+export const eliminarNotificacion = async (id) => {
+  try {
+    await axios.delete(`${API_URL_NOTIFICACIONES}/${id}`);
+  } catch (error) {
+    throw error.response?.data || { message: "Error desconocido" };
+  }
+};

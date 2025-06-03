@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Notificaciones.css";
-import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import { FaCheckCircle, FaRegCircle, FaTrash } from "react-icons/fa";
+import { AuthContext } from "../../../context/AuthContext.jsx";
+import { useModal } from "../../../context/ModalContext.jsx";
+import {
+  marcarNotificacionLeida,
+  obtenerNotificacionesPorDNI,
+  eliminarNotificacion,
+} from "../../../api/NotificacionApi.js";
 
 const opciones = [
   { value: "todos", label: "Todos" },
@@ -9,38 +16,84 @@ const opciones = [
   { value: "vencimiento", label: "Vencim. Membresía" },
 ];
 
-// Ejemplo de datos de notificaciones
-const notificacionesEjemplo = [
-  {
-    id: 1,
-    titulo: "¡Bienvenido!",
-    mensaje: "Gracias por unirte.",
-    etiqueta: "eventos",
-    leido: true,
-  },
-  {
-    id: 2,
-    titulo: "Asistencia registrada",
-    mensaje: "Tu asistencia fue registrada hoy.",
-    etiqueta: "asistencias",
-    leido: false,
-  },
-  {
-    id: 3,
-    titulo: "Membresía por vencer",
-    mensaje: "Tu membresía vence en 3 días.",
-    etiqueta: "vencimiento",
-    leido: false,
-  },
-];
+const filtroMap = {
+  asistencias: "asistencia",
+  eventos: "evento",
+  vencimiento: "vencimiento",
+};
 
 const Notificaciones = () => {
   const [filtro, setFiltro] = useState("todos");
+  const [notificaciones, setNotificaciones] = useState([]);
+  const { user } = useContext(AuthContext);
+  const { showModal } = useModal();
+
+  useEffect(() => {
+    let interval;
+    if (user?.DNI) {
+      obtenerNotificacionesPorDNI(user.DNI)
+        .then(setNotificaciones)
+        .catch(() => setNotificaciones([]));
+
+      // Consulta periódica cada 10 segundos para ver si hay nuevas notificaciones
+      interval = setInterval(() => {
+        obtenerNotificacionesPorDNI(user.DNI)
+          .then(setNotificaciones)
+          .catch(() => setNotificaciones([]));
+      }, 10000);
+    }
+    return () => clearInterval(interval);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("Notificaciones recibidas:", notificaciones); // Verifica que tengan ID
+  }, [notificaciones]);
 
   const notificacionesFiltradas =
     filtro === "todos"
-      ? notificacionesEjemplo
-      : notificacionesEjemplo.filter((n) => n.etiqueta === filtro);
+      ? notificaciones
+      : notificaciones.filter(
+          (n) => (n.etiqueta || "").toLowerCase() === filtroMap[filtro]
+        );
+
+  const notificacionesOrdenadas = [...notificacionesFiltradas].sort((a, b) => {
+    // Los no leídos (estado === false) primero
+    if (a.estado === b.estado) return 0;
+    return a.estado ? 1 : -1;
+  });
+
+  const handleMarcarLeida = async (id) => {
+    try {
+      await marcarNotificacionLeida(id);
+      setNotificaciones((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, estado: !n.estado } : n))
+      );
+    } catch (e) {
+      showModal("Error", "No se pudo cambiar el estado de la notificación", "error");
+    }
+  };
+
+  const handleEliminar = async (id) => {
+    if (!id) {
+      showModal("Error", "No se pudo identificar la notificación", "error");
+      return;
+    }
+
+    showModal(
+      "Confirmar eliminación",
+      "¿Seguro que deseas eliminar esta notificación?",
+      "info",
+      async () => {
+        try {
+          await eliminarNotificacion(id);
+          setNotificaciones((prev) => prev.filter((n) => n.id !== id));
+        } catch (e) {
+          console.error("Error al eliminar:", e);
+          showModal("Error", "No se pudo eliminar la notificación", "error");
+        }
+      }
+    );
+  };
 
   return (
     <div className="notificaciones-bg">
@@ -59,37 +112,78 @@ const Notificaciones = () => {
             ))}
           </select>
         </div>
-        <table className="notificaciones-tabla">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Mensaje</th>
-              <th>Etiqueta</th>
-              <th>Leído</th>
-            </tr>
-          </thead>
-          <tbody>
-            {notificacionesFiltradas.map((n) => (
-              <tr key={n.id}>
-                <td>{n.titulo}</td>
-                <td>{n.mensaje}</td>
-                <td>
-                  <span className={`etiqueta etiqueta-${n.etiqueta}`}>
-                    {opciones.find((o) => o.value === n.etiqueta)?.label ||
-                      n.etiqueta}
-                  </span>
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  {n.leido ? (
-                    <FaCheckCircle color="#2ecc40" title="Leído" />
-                  ) : (
-                    <FaRegCircle color="#d60000" title="No leído" />
-                  )}
-                </td>
+        <div className="notificaciones-tabla-container">
+          <table className="notificaciones-tabla">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Mensaje</th>
+                <th>Etiqueta</th>
+                <th>Leído</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {notificacionesOrdenadas.length === 0 ? (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center", color: "#888" }}>
+                    No se encontraron notificaciones.
+                  </td>
+                </tr>
+              ) : (
+                notificacionesOrdenadas.map((n) => (
+                  <tr
+                    key={n.id}
+                    className={
+                      n.estado ? "notificacion-leida" : "notificacion-no-leida"
+                    }
+                  >
+                    <td>{n.titulo}</td>
+                    <td>{n.mensaje}</td>
+                    <td>
+                      <span
+                        className={`etiqueta etiqueta-${(
+                          n.etiqueta || ""
+                        ).toLowerCase()}`}
+                      >
+                        {n.etiqueta}
+                      </span>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <div 
+                        onClick={() => handleMarcarLeida(n.id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {n.estado ? (
+                          <FaCheckCircle 
+                            color="#2ecc40" 
+                            title="Marcar como no leída"
+                          />
+                        ) : (
+                          <FaRegCircle
+                            color="#d60000"
+                            className="icono-marcar-leido"
+                            title="Marcar como leída"
+                          />
+                        )}
+                      </div>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <FaTrash
+                        color="#d60000"
+                        className="icono-eliminar"
+                        onClick={() => {
+                          console.log("Attempting to delete notification with ID:", n.id);
+                          handleEliminar(n.id);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
