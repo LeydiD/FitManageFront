@@ -125,7 +125,7 @@ const MenuCliente = ({ isOpen, setIsOpen }) => {
         >
           <img
             src={`/${
-              showSelector ? selectedAvatar : user?.avatar || "avatar1.png"
+              showSelector ? selectedAvatar : user?.avatar || "avatar.png"
             }`}
             alt="Avatar"
             className="cliente-avatar"

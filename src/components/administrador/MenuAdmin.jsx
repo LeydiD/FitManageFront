@@ -63,7 +63,7 @@ const MenuAdmin = ({ isOpen, setIsOpen }) => {
 
   const handleCancel = () => {
     setShowSelector(false);
-    setSelectedAvatar(user?.avatar || "avatar1.png");
+    setSelectedAvatar(user?.avatar || "avatar.png");
   };
 
   const handleConfirm = async () => {

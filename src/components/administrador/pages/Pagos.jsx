@@ -8,6 +8,7 @@ import Modal from "../../Modal.jsx";
 const Pagos = () => {
   const [formData, setFormData] = useState({
     DNI: "",
+    nombre: "",
     membresia: "",
     precio: "",
   });
@@ -19,6 +20,9 @@ const Pagos = () => {
     body: "",
     type: "info",
   });
+
+  // Estado para el usuario encontrado
+  const [usuario, setUsuario] = useState(null);
 
   const mostrarModal = (titulo, cuerpo, tipo = "info") => {
     setModalInfo({
@@ -46,6 +50,32 @@ const Pagos = () => {
 
     cargarMembresias();
   }, []);
+
+  // Buscar usuario automáticamente al escribir el DNI
+  useEffect(() => {
+    const buscar = async () => {
+      if (formData.DNI.length < 6) {
+        setUsuario(null);
+        setFormData((prev) => ({ ...prev, nombre: "" }));
+        return;
+      }
+      try {
+        const cliente = await obtenerClientePorDNI(formData.DNI);
+        setUsuario(cliente || null);
+        setFormData((prev) => ({
+          ...prev,
+          nombre: cliente
+            ? [cliente.nombre, cliente.apellido].filter(Boolean).join(" ")
+            : "",
+        }));
+      } catch {
+        setUsuario(null);
+        setFormData((prev) => ({ ...prev, nombre: "" }));
+      }
+    };
+    buscar();
+    // eslint-disable-next-line
+  }, [formData.DNI]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +120,9 @@ const Pagos = () => {
       console.log("Pago registrado exitosamente:", resultado);
       mostrarModal("Éxito", "Pago registrado exitosamente", "success");
 
-      setFormData({ DNI: formData.DNI, membresia: "", precio: "" });
+      // Limpiar todos los campos
+      setFormData({ DNI: "", nombre: "", membresia: "", precio: "" });
+      setUsuario(null);
     } catch (error) {
       console.error("Error al registrar el pago:", error);
       mostrarModal(
@@ -103,7 +135,8 @@ const Pagos = () => {
 
   return (
     <div className="pago-container">
-      <div className="pago-form">
+      <div className={`pago-form${formData.nombre ? " nombre-activo" : ""}`}>
+        {/* Imagen circular arriba del formulario */}
         <div className="logo-container">
           <img src="/LogoGym.jpeg" alt="Logo Gym" className="gym-logo" />
         </div>
@@ -117,6 +150,19 @@ const Pagos = () => {
             onChange={handleChange}
             className="input-field"
           />
+
+          {formData.nombre && (
+            <>
+              <label>Nombre</label>
+              <input
+                type="text"
+                name="nombre"
+                value={formData.nombre}
+                className="input-field"
+                disabled
+              />
+            </>
+          )}
 
           <label>Tipo de membresía</label>
           <select
@@ -138,7 +184,9 @@ const Pagos = () => {
             type="text"
             name="precio"
             value={
-              formData.precio? `\$ ${Number(formData.precio).toLocaleString()}`: ""
+              formData.precio
+                ? `\$ ${Number(formData.precio).toLocaleString()}`
+                : ""
             }
             className="input-field"
             disabled

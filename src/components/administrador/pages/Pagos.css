@@ -102,6 +102,19 @@ select.input-field option {
   background-color: #c71515;
 }
 
+/* Reduce los espacios solo cuando el input del nombre está presente */
+.pago-form.nombre-activo .input-field {
+  margin-bottom: 6px;
+}
+
+.pago-form.nombre-activo label {
+  margin-bottom: 2px;
+}
+
+.pago-form.nombre-activo .btn-registrar {
+  margin-top: 8px;
+}
+
 @media (max-width: 768px) {
   .pago-form {
     width: 85%;

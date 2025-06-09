@@ -7,19 +7,33 @@ const EnviarNotificacion = () => {
   const [mensaje, setMensaje] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [feedbackType, setFeedbackType] = useState(""); // "success" o "error"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setFeedback("");
+    setFeedbackType("");
 
     try {
       await crearNotificacion(asunto, mensaje);
-      setFeedback(" Notificación enviada exitosamente");
+      setFeedback("Notificación enviada exitosamente");
+      setFeedbackType("success");
       setAsunto("");
       setMensaje("");
+      setTimeout(() => {
+        setFeedback("");
+        setFeedbackType("");
+      }, 1500);
     } catch (error) {
-      setFeedback(`Error: ${error.message || "No se pudo enviar la notificación"}`);
+      setFeedback(
+        `Error: ${error.message || "No se pudo enviar la notificación"}`
+      );
+      setFeedbackType("error");
+      setTimeout(() => {
+        setFeedback("");
+        setFeedbackType("");
+      }, 1000);
     } finally {
       setLoading(false);
     }
@@ -57,7 +71,17 @@ const EnviarNotificacion = () => {
           <button type="submit" className="enviar-noti-btn" disabled={loading}>
             {loading ? "Enviando..." : "Enviar"}
           </button>
-          {feedback && <p>{feedback}</p>}
+          {feedback && (
+            <p
+              style={{
+                color: feedbackType === "success" ? "green" : "red",
+                fontWeight: "bold",
+                marginTop: "10px",
+              }}
+            >
+              {feedback}
+            </p>
+          )}
         </form>
       </div>
     </div>
